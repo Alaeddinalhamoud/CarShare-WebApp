@@ -1,0 +1,143 @@
+﻿@model CarShare.Data.Vehicle
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_CPLayout.cshtml";
+}
+
+<div class="main-content">
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="overview-wrap">
+                        <h2 class="title-1">Edit</h2>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="col-md-12">
+                <form asp-action="Edit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Id" />
+                    <div class="form-group">
+                        <label asp-for="VIN" class="control-label"></label>
+                        <input asp-for="VIN" class="form-control" />
+                        <span asp-validation-for="VIN" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Registration" class="control-label"></label>
+                        <input asp-for="Registration" class="form-control" />
+                        <span asp-validation-for="Registration" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model" class="control-label"></label>
+                        <input asp-for="Model" class="form-control" />
+                        <span asp-validation-for="Model" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CylinderCapacity" class="control-label"></label>
+                        <input asp-for="CylinderCapacity" class="form-control" />
+                        <span asp-validation-for="CylinderCapacity" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="NumberOfDoors" class="control-label"></label>
+                        <input asp-for="NumberOfDoors" class="form-control" />
+                        <span asp-validation-for="NumberOfDoors" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SixMonthRate" class="control-label"></label>
+                        <input asp-for="SixMonthRate" class="form-control" />
+                        <span asp-validation-for="SixMonthRate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="TwelveMonthRate" class="control-label"></label>
+                        <input asp-for="TwelveMonthRate" class="form-control" />
+                        <span asp-validation-for="TwelveMonthRate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="DateOfFirstRegistration" class="control-label"></label>
+                        <input asp-for="DateOfFirstRegistration" class="form-control" />
+                        <span asp-validation-for="DateOfFirstRegistration" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="YearOfManufacture" class="control-label"></label>
+                        <input asp-for="YearOfManufacture" class="form-control" />
+                        <span asp-validation-for="YearOfManufacture" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Co2Emissions" class="control-label"></label>
+                        <input asp-for="Co2Emissions" class="form-control" />
+                        <span asp-validation-for="Co2Emissions" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="FuelType" class="control-label"></label>
+                        <input asp-for="FuelType" class="form-control" />
+                        <span asp-validation-for="FuelType" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="TaxStatus" class="control-label"></label>
+                        <input asp-for="TaxStatus" class="form-control" />
+                        <span asp-validation-for="TaxStatus" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Transmission" class="control-label"></label>
+                        <input asp-for="Transmission" class="form-control" />
+                        <span asp-validation-for="Transmission" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Colour" class="control-label"></label>
+                        <input asp-for="Colour" class="form-control" />
+                        <span asp-validation-for="Colour" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="TypeApproval" class="control-label"></label>
+                        <input asp-for="TypeApproval" class="form-control" />
+                        <span asp-validation-for="TypeApproval" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="WheelPlan" class="control-label"></label>
+                        <input asp-for="WheelPlan" class="form-control" />
+                        <span asp-validation-for="WheelPlan" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="RevenueWeight" class="control-label"></label>
+                        <input asp-for="RevenueWeight" class="form-control" />
+                        <span asp-validation-for="RevenueWeight" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="TaxDetails" class="control-label"></label>
+                        <input asp-for="TaxDetails" class="form-control" />
+                        <span asp-validation-for="TaxDetails" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="MotDetails" class="control-label"></label>
+                        <input asp-for="MotDetails" class="form-control" />
+                        <span asp-validation-for="MotDetails" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PricePerHour" class="control-label"></label>
+                        <input asp-for="PricePerHour" class="form-control" />
+                        <span asp-validation-for="PricePerHour" class="text-danger"></span>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="Taxed" /> @Html.DisplayNameFor(model => model.Taxed)
+                        </label>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="Mot" /> @Html.DisplayNameFor(model => model.Mot)
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Save" class="au-btn au-btn-icon au-btn--blue" />
+                    </div>
+                </form>
+                <br/>
+            </div>
+        </div>
+    </div>
+</div>

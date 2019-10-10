@@ -1,0 +1,727 @@
+﻿@model CarShareV1.Models.FindVehicleModelView
+
+<style>
+    /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+    #map {
+        height: 425px;
+    }
+
+    .controls {
+        margin-top: 10px;
+        border: 1px solid transparent;
+        border-radius: 2px 0 0 2px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        height: 32px;
+        outline: none;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    #origin-input,
+    #destination-input {
+        background-color: #fff;
+        font-family: Roboto;
+        font-size: 15px;
+        font-weight: 300;
+        margin-left: 12px;
+        padding: 0 11px 0 13px;
+        text-overflow: ellipsis;
+        width: 200px;
+    }
+
+        #origin-input:focus,
+        #destination-input:focus {
+            border-color: #4d90fe;
+        }
+
+    #mode-selector {
+        color: #fff;
+        background-color: #4d90fe;
+        margin-left: 12px;
+        padding: 5px 11px 0px 11px;
+    }
+</style>
+
+<section id="slider-area">
+    <!--== slide Item One ==-->
+    <div class="single-slide-item overlay">
+        <div class="container">
+            <br/>
+            <partial name="_StatusMessage" for="StatusMessage" />
+            <div class="row ">
+                <div class="col-lg-8 Map-a-car">
+                    <div class="choose-content-wrap">
+                        <button onclick="dropPin()" class="book-now-btn"><i class="fa fa-map-pin"></i> DropOFF</button>
+                        <!-- <button value="Find the Route" class="book-now-btn" onclick="calcRoute()">ROUTE</button>-->
+                        <!--Map Input box-->
+                        <div style="display: none">
+                            <input id="origin-input" class="controls" type="text"
+                                   placeholder="Enter an origin location">
+                            <input id="destination-input" class="controls" type="text"
+                                   placeholder="Enter a destination location">
+                            <div id="mode-selector" class="controls">
+                                <input type="radio" name="type" id="changemode-driving" checked="checked">
+                                <label for="changemode-driving">Driving</label>
+                            </div>
+                        </div>
+                        <!-- Your Map here Start -->
+                        <div class="maparea" id="map" style="margin-top:10px;">
+                        </div>
+                        <!-- Your Map here  End -->
+
+
+
+                    </div>
+                </div>
+                <div class="col-lg-4 book-a-car ">
+                    <div>
+                        <!-- <form asp-controller="Home" asp-action="FindCarInList" method="post">-->
+                        <form asp-controller="Home" asp-action="FindCarInMap" method="post">
+                            <!--== Pick Up Date ==-->
+                            <div class="pick-up-date book-item">
+                                <h4>DATE:</h4>
+                                <!--Will accepte date between min and max-->
+                                <input asp-for="PickUpDate" type="date" id="startDate" placeholder="Pick Up Date" min="@DateTime.Now.ToString("yyyy-MM-dd")" max="@DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")" />
+
+
+
+                                <div class="return-car">
+                                    <h4>PICK UP TIME:</h4>
+                                    <select asp-for="PickUpTime" id="pickUpTime">
+                                        <option value="0">00:00</option>
+                                        <option value="1">01:00</option>
+                                        <option value="2">02:00</option>
+                                        <option value="3">03:00</option>
+                                        <option value="4">04:00</option>
+                                        <option value="5">05:00</option>
+                                        <option value="6">06:00</option>
+                                        <option value="7">07:00</option>
+                                        <option value="8">08:00</option>
+                                        <option value="9">09:00</option>
+                                        <option value="10">10:00</option>
+                                        <option value="11">11:00</option>
+                                        <option value="12">12:00</option>
+                                        <option value="13">13:00</option>
+                                        <option value="14">14:00</option>
+                                        <option value="15">15:00</option>
+                                        <option value="16">16:00</option>
+                                        <option value="17">17:00</option>
+                                        <option value="18">18:00</option>
+                                        <option value="19">19:00</option>
+                                        <option value="20">20:00</option>
+                                        <option value="21">21:00</option>
+                                        <option value="22">22:00</option>
+                                        <option value="23">23:00</option>
+                                        <option value="24">24:00</option>
+                                    </select>
+                                </div>
+                                @*
+                                        Futere plan
+                            <h4>DATE:</h4>
+                            <input type="date" asp-for="DropOffDate" id="endDate" placeholder="DROP OFF Date"  />
+                                *@
+                                <div class="return-car">
+                                    <h4>DROP OFF TIME:</h4>
+                                    <select asp-for="DropOffTime" id="dropOffTime">
+                                        <option value="0">00:00</option>
+                                        <option value="1">01:00</option>
+                                        <option value="2">02:00</option>
+                                        <option value="3">03:00</option>
+                                        <option value="4">04:00</option>
+                                        <option value="5">05:00</option>
+                                        <option value="6">06:00</option>
+                                        <option value="7">07:00</option>
+                                        <option value="8">08:00</option>
+                                        <option value="9">09:00</option>
+                                        <option value="10">10:00</option>
+                                        <option value="11">11:00</option>
+                                        <option value="12">12:00</option>
+                                        <option value="13">13:00</option>
+                                        <option value="14">14:00</option>
+                                        <option value="15">15:00</option>
+                                        <option value="16">16:00</option>
+                                        <option value="17">17:00</option>
+                                        <option value="18">18:00</option>
+                                        <option value="19">19:00</option>
+                                        <option value="20">20:00</option>
+                                        <option value="21">21:00</option>
+                                        <option value="22">22:00</option>
+                                        <option value="23">23:00</option>
+                                        <option value="24">24:00</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <!--== Car Choose ==-->
+                            <div class="book-button text-center">
+                                @{
+                                    if (Model.StatusMessage == null)
+                                    {
+                                        <button type="submit" class="book-now-btn" onclick="return Validations();" id="btnsubmit">Find Car</button>
+                                    }
+                                }
+
+                            </div>
+                            <input asp-for="PickLatitude" hidden />
+                            <input asp-for="PickLongitude" hidden />
+                            <input asp-for="DropLatitude" hidden />
+                            <input asp-for="DropLongitude" hidden />
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--== slide Item One ==-->
+</section>
+
+
+<script src="~/Style/js/jquery-3.2.1.min.js"></script>
+
+
+
+<script>
+
+    //To Check The  Inputs not NUll
+    function Validations() {
+        var IsValid = true;
+        console.log($('#DropLongitude').val());
+        var pickuptime = document.getElementById("pickUpTime").selectedIndex;
+        var dropofftime = document.getElementById("dropOffTime").selectedIndex;
+
+        if ($('#startDate').val().trim() === null || $('#startDate').val().trim() === "" || $('#startDate').val().trim() === 'undefined' ) {
+            alert('Please,Choose You PickUp Date....');
+            IsValid=false;
+        }
+      //  else if ($('#endDate').val().trim() === null || $('#endDate').val().trim() === "" || $('#endDate').val().trim() === 'undefined') {
+       //     alert('Please,Choose You DropOff Date....');
+       //     IsValid = false;
+//}
+      else  if (dropofftime <= pickuptime) {
+            alert('Drop Off Time Should be Greater than PickUp Time!');
+            IsValid = false;
+        }
+
+
+      //  else if ($('#endDate').val() < $('#startDate').val()) {
+       //     alert('Dear User, Your Enterd DropOff Date is Before  PickUp Date!');
+       //     IsValid = false;
+       // }
+        else if ($('#PickLatitude').val().trim() === null || $('#PickLatitude').val().trim() === "" && $('#PickLongitude').val().trim() === null || $('#PickLongitude').val().trim() === "" ) {
+            alert('Please,Choose You PickUp Location....');
+            IsValid = false;
+        }
+
+        else if ($('#DropLongitude').val().trim() === null || $('#DropLongitude').val().trim() === "" && $('#DropLatitude').val().trim() === null || $('#DropLatitude').val().trim() === "") {
+            alert('Please,Choose You DropOff Location....');
+            IsValid = false;
+        }
+
+        return IsValid;
+
+    }
+
+
+@*
+    function FindCar() {
+        var DataObj = {
+            PickUpDate: $('#startDate').val(),
+            DropOffDate: $('#endDate').val(),
+            PickUpTime: $('#pickUpTime').val(),
+            DropOffTime: $('#dropOffTime').val(),
+            Latitude: $('#latitude').val(),
+            Longitude: $('#longitude').val()
+        };
+        console.log('Submiting my Data...');
+        console.log(DataObj);
+        $.ajax({
+            url: "/Home/FindCar",
+            data: JSON.stringify(DataObj),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                console.log('working...');
+                console.log(result);
+                //Map section code
+                var markers = result;
+                var mapOptions = {
+                    center: new google.maps.LatLng(markers[0].lat, markers[0].lng),
+                    zoom: 13,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                };
+                var image = {
+                    url: '/image/CarShare/Car_Pin.png', // url
+                    scaledSize: new google.maps.Size(30, 30), // scaled size
+                    origin: new google.maps.Point(0, 0), // origin
+                    anchor: new google.maps.Point(0, 0) // anchor
+                };
+                var infowindow = new google.maps.InfoWindow();
+                var map = new google.maps.Map(document.getElementById("dvMap"), mapOptions);
+                for (i = 0; i < markers.length; i++) {
+                    addLocation(markers[i]);
+                }
+                function addLocation(datta) {
+                    var data = datta
+                    var myLatlng = new google.maps.LatLng(data.lat, data.lng);
+                    var marker = new google.maps.Marker({
+                        position: myLatlng,
+                        icon: image,
+                        map: map,
+                        title: data.title
+                    });
+                    google.maps.event.addListener(marker, 'click', function () {
+                        infowindow.close(); // Close previously opened infowindow
+                        infowindow.setContent(datta.text);
+                        infowindow.open(map, marker);
+                    });
+                }
+                //ends maps
+            },
+            error: function (errormessage) {
+                alert(errormessage);
+            }
+        });
+    }
+    *@
+    @*
+    $(document).ready(function () {
+        console.log("ready!");
+        initialize();
+    });
+
+    //Get the Location from Geo HTML nad set it on the text box.
+    var directionsDisplay;
+    var directionsService = new google.maps.DirectionsService();
+    var map;
+    var endMarker;
+    var pos;
+    function initialize() {
+        //My Pin Start
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                function (position) {
+                    pos = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+                    //My Map Code
+                    //set the start init from pos
+                    SetStartPosition(pos);
+                    directionsDisplay = new google.maps.DirectionsRenderer();
+                    var startPosition = new google.maps.LatLng(pos.lat, pos.lng);
+                    var mapOptions = {
+                        zoom: 13,
+                        center: startPosition
+                    }
+                    // Creating map object
+                    map = new google.maps.Map(document.getElementById("map"), mapOptions);
+                    // creates a draggable marker to the given coords
+                    var vMarker = new google.maps.Marker({
+                        position: new google.maps.LatLng(pos.lat, pos.lng),
+                        draggable: true
+                    });
+                    // adds a listener to the marker
+                    // gets the coords when drag event ends
+                    // then updates the input with the new coords
+                    google.maps.event.addListener(vMarker, 'dragend', function (evt) {
+                        $("#PickLatitude").val(evt.latLng.lat().toFixed(6));
+                        $("#PickLongitude").val(evt.latLng.lng().toFixed(6));
+                        map.panTo(evt.latLng);
+                    });
+                    // centers the map on markers coords
+                    map.setCenter(vMarker.position);
+                    var circle = new google.maps.Circle({
+                        map: map,
+                        radius: 2000,    // metres
+                        fillColor: '#FF6600',
+                        fillOpacity: 0.3,
+                        strokeColor: "#FFF",
+                        strokeWeight: 0
+                    });
+                    circle.bindTo('center', vMarker, 'position');
+                    // adds the marker on the map
+                    vMarker.setMap(map);
+                    directionsDisplay.setMap(map);
+                    ///End
+                    ///Enad
+                }, showError);
+        } else {
+            alert("Geolocation is not supported by this browser.");
+        }
+    }
+    function dropPin() {
+        // if any previous marker exists, let's first remove it from the map
+        if (endMarker) {
+            endMarker.setMap(null);
+        }
+        var image = {
+            url: '/image/CarShare/user-location.png', // url
+            scaledSize: new google.maps.Size(40, 40), // scaled size
+            origin: new google.maps.Point(0, 0), // origin
+            anchor: new google.maps.Point(20, 35) // anchor
+        };
+        // create the marker
+        endMarker = new google.maps.Marker({
+            position: map.getCenter(),
+            map: map,
+            icon: image,
+            draggable: true,
+        });
+        copyMarkerpositionToInput();
+        //Add an event "onDrag"
+        google.maps.event.addListener(endMarker, 'dragend', function () {
+            copyMarkerpositionToInput();
+        });
+    }
+    //end
+    function copyMarkerpositionToInput() {
+        // get the position of the marker, and set it as the value of input
+        document.getElementById("DropLatitude").value = endMarker.getPosition().lat();
+        document.getElementById("DropLongitude").value = endMarker.getPosition().lng();
+    }
+    function SetStartPosition(pos) {
+        document.getElementById("PickLatitude").value = pos.lat;
+        document.getElementById("PickLongitude").value = pos.lng;
+    }
+    function calcRoute() {
+        var start = document.getElementById("PickLatitude").value + ',' + document.getElementById("PickLongitude").value;
+        var end = document.getElementById("DropLatitude").value + ',' + document.getElementById("DropLongitude").value;
+        var request = {
+            origin: start,
+            destination: end,
+            travelMode: google.maps.TravelMode.DRIVING
+        };
+        directionsService.route(request, function (result, status) {
+            if (status == google.maps.DirectionsStatus.OK) {
+                directionsDisplay.setDirections(result);
+                console.log('result');
+                console.log(result);
+            }
+        });
+    }
+    google.maps.event.addDomListener(window, 'load', initialize);
+    function showError(error) {
+        switch (error.code) {
+            case error.PERMISSION_DENIED:
+                alert("User denied the request for Geolocation.")
+                break;
+            case error.POSITION_UNAVAILABLE:
+                alert("Location information is unavailable.")
+                break;
+            case error.TIMEOUT:
+                alert("The request to get user location timed out.")
+                break;
+            case error.UNKNOWN_ERROR:
+                alert("An unknown error occurred.")
+                break;
+        }
+    }
+</script>
+
+<!--FOr Tabs Map Postcode-->
+<script>
+    function openTabs(evt, tabName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+        *@
+</script>
+<!--New Code to mix google map -->
+@*
+
+    <script>
+        //Just for 2 days to book in adv
+        $(function () {
+            var dtToday = new Date();
+
+            var month = dtToday.getMonth();
+            var day = dtToday.getDate();
+            var maxday = dtToday.getDate()+1;
+            var year = dtToday.getFullYear();
+            //To check less the 10 coz of the datepicker need 05 not 5
+            if (month < 10)
+                month = '0' + month.toString();
+            if (day < 10) {
+                day = '0' + day.toString();
+                maxday = '0' + maxday.toString();
+            }
+
+
+
+
+
+
+            var minDate = year + '-' + month + '-' + day;
+            var maxDate = year + '-' + month + '-' + maxday;
+            alert(maxDate);
+            alert(minDate);
+            $('#startDate').attr('min', minDate);
+            $('#startDate').attr('max', maxDate);
+        });
+    </script>*@
+
+
+<script src="//maps.googleapis.com/maps/api/js?key=AIzaSyAJu3YwpJf6K5u1EVMtncPm4CD3209OWnw&libraries=places"></script>
+
+<script>
+    $(document).ready(function () {
+        console.log("ready!");
+        initMap();
+    });
+
+
+    var directionsDisplay;
+    var directionsService = new google.maps.DirectionsService();
+    var map;
+    var endMarker;
+    var pos;
+
+    function initMap() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                function (position) {
+                    pos = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+                    //My Map Code
+                    //set the start init from pos
+                    SetStartPosition(pos);
+                    var startPosition = new google.maps.LatLng(pos.lat, pos.lng);
+                    var mapOptions = {
+                        zoom: 13,
+                        center: startPosition
+                    }
+                    // Creating map object
+                    map = new google.maps.Map(document.getElementById("map"), mapOptions);
+                    // creates a draggable marker to the given coords
+                    var vMarker = new google.maps.Marker({
+                        position: new google.maps.LatLng(pos.lat, pos.lng),
+                        draggable: true
+                    });
+                    // then updates the input with the new coords
+                    google.maps.event.addListener(vMarker, 'dragend', function (evt) {
+                        $("#PickLatitude").val(evt.latLng.lat().toFixed(6));
+                        $("#PickLongitude").val(evt.latLng.lng().toFixed(6));
+                        map.panTo(evt.latLng);
+                    });
+                    // centers the map on markers coords
+                    map.setCenter(vMarker.position);
+                    var circle = new google.maps.Circle({
+                        map: map,
+                        radius: 2000,    // metres
+                        fillColor: '#FF6600',
+                        fillOpacity: 0.3,
+                        strokeColor: "#FFF",
+                        strokeWeight: 0
+                    });
+                    circle.bindTo('center', vMarker, 'position');
+                    // adds the marker on the map
+                    vMarker.setMap(map);
+                    // directionsDisplay.setMap(map);
+                    ///End
+                    ///Enad
+
+                    new AutocompleteDirectionsHandler(map);
+                }, showError);
+        }
+        else {
+            alert("Geolocation is not supported by this browser.");
+        }
+    }
+    function AutocompleteDirectionsHandler(map) {
+        this.map = map;
+        this.originPlaceId = null;
+        this.destinationPlaceId = null;
+        this.travelMode = 'DRIVING';
+        this.directionsService = new google.maps.DirectionsService;
+        this.directionsDisplay = new google.maps.DirectionsRenderer;
+        this.directionsDisplay.setMap(map);
+        var originInput = document.getElementById('origin-input');
+        var destinationInput = document.getElementById('destination-input');
+        var modeSelector = document.getElementById('mode-selector');
+        var originAutocomplete = new google.maps.places.Autocomplete(originInput);
+        // Specify just the place data fields that you need.
+        originAutocomplete.setFields(['place_id']);
+        var destinationAutocomplete =
+            new google.maps.places.Autocomplete(destinationInput);
+        // Specify just the place data fields that you need.
+        destinationAutocomplete.setFields(['place_id']);
+        this.setupClickListener('changemode-driving', 'DRIVING');
+        this.setupPlaceChangedListener(originAutocomplete, 'ORIG');
+        this.setupPlaceChangedListener(destinationAutocomplete, 'DEST');
+        this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(originInput);
+        this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(destinationInput);
+        this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(modeSelector);
+    }
+    // Sets a listener on a radio button to change the filter type on Places
+    // Autocomplete.
+    AutocompleteDirectionsHandler.prototype.setupClickListener = function (
+        id, mode) {
+        var radioButton = document.getElementById(id);
+        var me = this;
+
+        radioButton.addEventListener('click', function () {
+            me.travelMode = mode;
+            me.route();
+        });
+    };
+
+    AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function (
+        autocomplete, mode) {
+        var me = this;
+        autocomplete.bindTo('bounds', this.map);
+
+        autocomplete.addListener('place_changed', function () {
+            var place = autocomplete.getPlace();
+            console.log(place);
+            if (!place.place_id) {
+                window.alert('Please select an option from the dropdown list.');
+                return;
+            }
+            if (mode === 'ORIG') {
+                me.originPlaceId = place.place_id;
+                console.log('place.place_id ORIG');
+                console.log(place.place_id);
+                //Sent the id to get the late and long
+                SetDirections('ORIG', place.place_id);
+
+            } else {
+                console.log('place.place_id DEs');
+                console.log(place.place_id);
+                me.destinationPlaceId = place.place_id;
+                SetDirections('DEST', place.place_id);
+            }
+            me.route();
+        });
+    };
+
+    AutocompleteDirectionsHandler.prototype.route = function () {
+        if (!this.originPlaceId || !this.destinationPlaceId) {
+            return;
+        }
+        var me = this;
+        console.log('Me');
+        console.log(me);
+        this.directionsService.route(
+            {
+                origin: { 'placeId': this.originPlaceId },
+                destination: { 'placeId': this.destinationPlaceId },
+                travelMode: this.travelMode
+            },
+            function (response, status) {
+                if (status === 'OK') {
+                    me.directionsDisplay.setDirections(response);
+                    console.log(response);
+                } else {
+                    window.alert('Directions request failed due to ' + status);
+                }
+            });
+    };
+    //TypeOfPlace dest or orgi
+    function SetDirections(TypeOfPlace, _placeId) {
+        var geocoder = new google.maps.Geocoder;
+        var placeId = _placeId;
+
+        geocoder.geocode({ 'placeId': placeId }, function (results, status) {
+            if (status === 'OK') {
+                console.log(results[0]);
+                if (results[0]) {
+                    if (TypeOfPlace == 'ORIG') {
+                        document.getElementById("PickLatitude").value = results[0].geometry.location.lat();
+                        document.getElementById("PickLongitude").value = results[0].geometry.location.lng();
+                    } else {
+                        document.getElementById("DropLatitude").value = results[0].geometry.location.lat();
+                        document.getElementById("DropLongitude").value = results[0].geometry.location.lng();
+                    }
+                } else {
+                    window.alert('No results found');
+                }
+            } else {
+                window.alert('Geocoder failed due to: ' + status);
+            }
+        });
+    }
+
+    function dropPin() {
+        if (event.originalEvent !== undefined && _.touchObject.swipeLength > 4 && event.cancelable) { event.preventDefault(); }
+        console.log('PinIt');
+        // if any previous marker exists, let's first remove it from the map
+        if (endMarker) {
+            endMarker.setMap(null);
+        }
+        var image = {
+            url: '/image/CarShare/WantedLocation.gif', // url
+            scaledSize: new google.maps.Size(40, 40), // scaled size
+            origin: new google.maps.Point(0, 0), // origin
+            anchor: new google.maps.Point(20, 35) // anchor
+        };
+        // create the marker
+        endMarker = new google.maps.Marker({
+            position: map.getCenter(),
+            map: map,
+            icon: image,
+            draggable: true,
+        });
+        copyMarkerpositionToInput();
+        //Add an event "onDrag"
+        google.maps.event.addListener(endMarker, 'dragend', function () {
+            copyMarkerpositionToInput();
+        });
+    }
+    //end
+    function copyMarkerpositionToInput() {
+        // get the position of the marker, and set it as the value of input
+        document.getElementById("DropLatitude").value = endMarker.getPosition().lat();
+        document.getElementById("DropLongitude").value = endMarker.getPosition().lng();
+    }
+    function SetStartPosition(pos) {
+        document.getElementById("PickLatitude").value = pos.lat;
+        document.getElementById("PickLongitude").value = pos.lng;
+    }
+    function calcRoute() {
+        var start = document.getElementById("PickLatitude").value + ',' + document.getElementById("PickLongitude").value;
+        var end = document.getElementById("DropLatitude").value + ',' + document.getElementById("DropLongitude").value;
+        var request = {
+            origin: start,
+            destination: end,
+            travelMode: google.maps.TravelMode.DRIVING
+        };
+        directionsService.route(request, function (result, status) {
+            if (status == google.maps.DirectionsStatus.OK) {
+                directionsDisplay.setDirections(result);
+                console.log('result');
+                console.log(result);
+            }
+        });
+    }
+    google.maps.event.addDomListener(window, 'load', initMap);
+    function showError(error) {
+        switch (error.code) {
+            case error.PERMISSION_DENIED:
+                alert("User denied the request for Geolocation.")
+                break;
+            case error.POSITION_UNAVAILABLE:
+                alert("Location information is unavailable.")
+                break;
+            case error.TIMEOUT:
+                alert("The request to get user location timed out.")
+                break;
+            case error.UNKNOWN_ERROR:
+                alert("An unknown error occurred.")
+                break;
+        }
+    }
+</script>
+
+

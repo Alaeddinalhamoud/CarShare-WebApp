@@ -1,0 +1,64 @@
+﻿@model CarShare.Data.DrivingLicence
+@{
+    ViewData["Title"] = "UploadDrivingLicenceImage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/css/ImageUploaderCSS/basic.css" rel="stylesheet" />
+<link href="~/css/ImageUploaderCSS/dropzone.css" rel="stylesheet" />
+ 
+<script src="~/js/ImageUploaderJS/dropzone.js"></script>
+<script src="~/js/ImageUploaderJS/dropzone-amd-module.js"></script>
+
+
+<section id="page-title-area" class="section-padding">
+    <div class="container">
+        <!-- Satrtt -->
+        <div class="row">
+            <div class="col-md-12">
+
+
+
+                <h6><i class="fas fa-cloud-upload-alt"></i>The Maximun Number Of Images is 1</h6>
+                <form asp-action="SaveDrivingLicenceImage" asp-controller="DrivingLicence" class="dropzone" id="dropzoneJsForm">
+                    <input asp-for="Id" hidden="hidden" value="@Model.Id" />
+                </form>
+                <br />
+                <button id="submit-all" type="submit" class="btn btn-danger">Next</button>
+                <a id="btn-done" class="btn btn-danger" href="/DrivingLicence/MyDrivingLicence">Done</a>
+
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@section Scripts {
+
+    
+
+    <script >
+        $(document).ready(function () {
+            $("#btn-done").hide();
+        });
+
+        Dropzone.options.dropzoneJsForm = {
+            //prevents Dropzone from uploading dropped files immediately
+            autoProcessQueue: false,
+            init: function () {
+                var submitButton = document.querySelector("#submit-all");
+                var myDropzone = this; //closure
+                submitButton.addEventListener("click", function () {
+                    //tell Dropzone to process all queued files
+                    myDropzone.processQueue();
+                    $("#btn-done").show();
+                    $("#submit-all").hide();
+                });
+            }
+        };
+    </script>
+
+
+
+}

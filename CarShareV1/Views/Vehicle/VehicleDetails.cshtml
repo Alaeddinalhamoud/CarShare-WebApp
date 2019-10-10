@@ -1,0 +1,287 @@
+﻿@model CarShareV1.Models.VehicleModelView
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<CarShare.Data.UserApplication> UserManager
+ @inject SignInManager<CarShare.Data.UserApplication> SignInManager
+ 
+@{
+    ViewData["Title"] = "VehicleDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<input id="Id" value="@Model.Id" hidden />
+<!--== Page Title Area Start ==-->
+<section id="page-title-area" class="section-padding overlay">
+    <div class="container">
+        <div class="row">
+            <!-- Page Title Start -->
+            <!-- Page Title Start -->
+            <div class="col-lg-12">
+                <div class="section-title  text-center">
+                    <h2>@Model.Model</h2>
+                    <span class="title-line"><i class="fa fa-car"></i></span>
+                    <p>@Model.YearOfManufacture</p>
+                </div>
+            </div>
+            <!-- Page Title End -->
+        </div>
+    </div>
+</section>
+<!--== Page Title Area End ==-->
+<!--== Car List Area Start ==-->
+<section id="car-list-area" class="section-padding">
+    <div class="container">
+        <div class="row">
+            <!-- Car List Content Start -->
+            <div class="col-lg-8">
+                <div class="car-details-content">
+                    <h2>@Model.Model <span class="price">Rent: <b> £ @Model.PricePerHour</b></span></h2>
+                    <div class="car-preview-crousel">
+                        <div class="single-car-preview">
+                            <img src="@Model.Image" alt="..">
+                        </div>
+                        <div class="single-car-preview">
+                            <img src="@Model.Image" alt="..">
+                        </div>
+                        <div class="single-car-preview">
+                            <img src="@Model.Image" alt="..">
+                        </div>
+
+                    </div>
+                    <div class="car-details-info">
+                        <h4>Additional Info</h4>
+                        <hr />
+                        <div class="ratings-review mb-15 d-flex align-items-center justify-content-between">
+                            <div class="ratings">
+                                <h6>
+                                    Rating:
+                                    @{
+                                        var num = Model.Rating;
+                                        if (num == 0)
+                                        {
+                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                        }
+                                        var res = num - Math.Truncate(num);
+                                        var inum = Math.Truncate(num);
+                                        for (var i = 0; i < inum; i++)
+                                        {
+                                            <i class="fa fa-star" style="color:gold;" aria-hidden="true"></i>
+                                        }
+                                        if (res != 0)
+                                        {
+                                            <i class="fa fa-star-half" style="color:gold;" aria-hidden="true"></i>
+                                        }
+                                    }
+                                </h6>
+
+
+                            </div>
+                            <!--If the user sign in will display add to fav-->
+                            @if (SignInManager.IsSignedIn(User))
+                            {
+                                string currentUserId = UserManager.GetUserId(User);
+                                <input id="UserId" value="@currentUserId" type="text" hidden/>
+                                <a style="float:right;">
+                                    Add To My Favorite
+                                    <i id="btn_Fav" onclick="AddToWishList(@Model.Id);" class="fa fa-heart fa-heart fa-2x" style="color:#eee;float:right;"></i>
+                                </a>
+                            }
+                            </div>
+                        <div class="technical-info">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="tech-info-table">
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <th>Class</th>
+                                                <td>Compact</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Fuel</th>
+                                                <td>@Model.FuelType</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Doors</th>
+                                                <td>@Model.NumberOfDoors</td>
+                                            </tr>
+                                            <tr>
+                                                <th>GearBox</th>
+                                                <td>@Model.Transmission</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <!-- to add review you have to login-->
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+
+                            <div class="review-area" id="CustomerWritingReviewBox">
+                                <h3>Be the first to review “@Model.Model”</h3>
+                                <div class="review-star">
+                                    <span>
+                                        Rating:
+                                        <input id="Rating" type="number" hidden="hidden" value="0" />
+                                        <a class='starrr' id='star1'></a>
+                                    </span>
+                                </div>
+                                <div class="review-form">
+                                    <div class="message-input">
+                                        <textarea id="Description" name="review" cols="30" rows="5" placeholder="Write Your Feedback Here!"></textarea>
+                                    </div>
+                                    <div class="input-submit">
+                                        <button type="button" onclick="SubmitReview();">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        <partial name="_VehicleReviews" model="Model.VehicleReviews" />
+
+
+
+                    </div>
+                </div>
+            </div>
+            <!-- Car List Content End -->
+
+        </div>
+    </div>
+</section>
+<!--== Car List Area End ==-->
+
+
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/js/StarRating/starrr.js"></script>
+<script>
+    $('#star1').starrr({
+        change: function (e, value) {
+            if (value) {
+                $("#Rating").val(value);
+            }
+        }
+    });
+
+</script>
+
+<script>
+    $(document).ready(function () {
+        id = $('#Id').val();
+        userid = $('#UserId').val();
+        console.log('PID' + id);
+
+        //Fav        
+       
+        $.ajax({
+            url: "/api/MyAPI/GetServiceFavoriteCheck?id=" + id + "&" + "userid=" + userid,
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                console.log(result);
+                var flag1 = result.flag;
+                console.log(result);
+                if (flag1) {
+                    document.getElementById("btn_Fav").style.color = "#dc3545";
+                } else {
+
+                    document.getElementById("btn_Fav").style.color = "#eee";
+                }
+            }
+        }); 
+
+        //Reviews
+        $.ajax({
+            url: "/api/MyAPI/CheckCustomerReview?id=" + id + "&" + "userid=" + userid,
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                console.log(result);
+                if (result.flag) {
+                    $('#CustomerWritingReviewBox').hide();
+                }
+            },
+            error: function (errormessage) {
+                alert(errormessage);
+            }
+        });
+    });
+    //add to wichlist
+    function AddToWishList(id) {
+
+        $.ajax({
+            url: "/api/MyAPI/AddToServiceWishList?id=" + id + "&" + "userid=" + userid,
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                var flag = result.flag;
+                if (flag) {
+                    document.getElementById("btn_Fav").style.color = "#eee";
+                } else {
+                    document.getElementById("btn_Fav").style.color = "#dc3545";
+
+                }
+                console.log(result);
+            },
+            error: function (errormessage) {
+                alert(errormessage);
+            }
+        });
+    }
+
+    //Submit REview
+        function SubmitReview() {
+        var ReviewObj = {
+            Rating: $('#Rating').val(),
+            Description: $('#Description').val(),
+            VehicleId: @Model.Id,
+            UserId: $('#UserId').val(),
+        };
+        console.log('Submitting form...');
+            console.log(ReviewObj);
+
+        $.ajax({
+            url: "/api/MyAPI/SubmitReview",
+            data: JSON.stringify(ReviewObj),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+
+            success: function (result) {
+
+                console.log(result);
+
+                if (result.flag) {
+                    $('#CustomerWritingReviewBox').hide();
+                    location.reload();
+                }
+            },
+            error: function (errormessage) {
+                alert(errormessage);
+
+            }
+        });
+    }
+
+        function validate() {
+            var isValid = true;
+            if ($('#Description').val().trim() === "") {
+                $('#Description').css('border-color', 'Red');
+                isValid = false;
+            }
+            else {
+                $('#Description').css('border-color', 'lightgrey');
+            }
+
+            return isValid;
+        }
+
+</script>

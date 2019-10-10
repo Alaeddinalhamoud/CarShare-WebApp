@@ -1,0 +1,137 @@
+﻿@model CarShareV1.Models.ReservationModelView
+@{
+    ViewData["Title"] = "ReservationDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+ 
+ 
+
+<!--== Page Title Area Start ==-->
+<section id="page-title-area" class="section-padding overlay">
+    <div class="container">
+        <div class="row">
+            <!-- Page Title Start -->
+            <div class="col-lg-12">
+                <div class="section-title  text-center">
+                    <h2>Reservation Details</h2>
+                    <br />
+                    <span class="title-line"><i class="fa fa-credit-card fa-2x"></i></span>
+                  
+                    <table class="table" style="color:#ffd000;text-align:left;">
+                       
+                        <tbody>
+                            <tr>
+                                <td>
+                                    Full Name:
+                                </td>
+                                <td>
+                                    @Model.UserName
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Vehicle Model:
+                                </td>
+                                <td>
+                                    @Model.VehicleModel
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    PickUp Date:
+                                </td>
+                                <td>
+                                    @Model.PickUpDate.ToShortDateString()
+                                </td>
+                            </tr>
+                            <tr>
+                                @*    <td>
+            DropOff Date:
+        </td>
+        <td>
+            @Model.DropOffDate.ToShortDateString()
+        </td>
+                                *@
+                            </tr>
+                         
+                            <tr>
+                                <td>
+                                    PickUp Time:
+                                </td>
+                                <td>
+                                    @Model.PickUpTime:00
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    DropOff Time:
+                                </td>
+                                <td>
+                                    @Model.DropOffTime:00
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Total:
+                                </td>
+                                <td>
+                                   £ @Model.Total
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Date:
+                                </td>
+                                <td>
+                                    @Model.Date.ToShortDateString()
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    IsConfirmed:
+                                </td>
+                                <td>
+                                    @{
+                                        var value = Model.IsConfirmed;
+                                        if (value)
+                                        {
+                                            <i class="fa fa-check-circle fa-2x" style="color:#ffd000"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="fa fa-times-circle fa-2x" style="color:#ffd000"></i>                                           
+                                        }
+                                    }
+
+                                </td>
+                            </tr>
+                           
+                        </tbody>
+                    </table>
+
+                    <div>
+                        @{ 
+
+
+                         
+
+
+                            string GoogleImagePath = $"https://maps.googleapis.com/maps/api/staticmap?size=600x300&maptype=roadmap" +
+                $"&markers=color:blue%7Clabel:S%7C{@Model.PickUpLocationLatitue},{@Model.PickUpLocationLongitute}" +
+                $"&markers=color:green%7Clabel:E%7C{@Model.ReturnLocationLatitue},{@Model.ReturnLocationLongitute}" +
+                $"&key=AIzaSyAJu3YwpJf6K5u1EVMtncPm4CD3209OWnw";
+                            <img src="@GoogleImagePath" />
+                        }
+                    </div>
+
+                </div>
+            </div>
+            <!-- Page Title End -->
+        </div>
+    </div>
+</section>
+
+
+
+

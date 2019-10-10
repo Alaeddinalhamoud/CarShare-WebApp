@@ -1,0 +1,157 @@
+﻿@model CarShareV1.Models.CPModelView
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_CPLayout.cshtml";
+}
+
+
+<div class="main-content">
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="overview-wrap">
+                        <h2 class="title-1">overview</h2>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row m-t-25">
+                <div class="col-sm-6 col-lg-3">
+                    <div class="overview-item overview-item--c1">
+                        <div class="overview__inner">
+                            <div class="overview-box clearfix">
+                                 
+                                <div class="text">
+                                    <h2>@Model.NumberOfUsers</h2>
+                                    <span>Members</span>
+                                </div>
+                            </div>
+                            <div class="overview-chart">
+                                <canvas id="widgetChart1"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <div class="overview-item overview-item--c2">
+                        <div class="overview__inner">
+                            <div class="overview-box clearfix">
+                                 
+                                <div class="text">
+                                    <h2>@Model.NumberOfResevations</h2>
+                                    <span>Reservation</span><br />
+                                </div>
+                            </div>
+                            <span>Last 24h</span>
+                            <div class="overview-chart">
+                                <canvas id="widgetChart2"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <div class="overview-item overview-item--c3">
+                        <div class="overview__inner">
+                            <div class="overview-box clearfix">
+                                 
+                                <div class="text">
+                                    <h2>@Model.NumberOfPendingDrivingLicence</h2>
+                                    <span>Pending Driving Licence</span>
+                                </div>
+                            </div>
+                            <div class="overview-chart">
+                                <canvas id="widgetChart3"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <div class="overview-item overview-item--c4">
+                        <div class="overview__inner">
+                            <div class="overview-box clearfix">
+                                
+                                <div class="text">
+                                    <h2>@Model.NumberOfVehicles</h2>
+                                    <span>Vehicles</span>
+                                </div>
+                            </div>
+                            <div class="overview-chart">
+                                <canvas id="widgetChart4"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-8">
+                    <h2 class="title-1 m-b-25">Last 10 Booking</h2>
+                    <div class="table-responsive table--no-card m-b-40">
+                        <table class="table table-borderless table-striped table-earning">
+                            <thead>
+                                <tr>
+                                    <th>date</th>
+                                    <th>ID</th>
+                                    <th>Status</th>
+
+                                    <th class="text-right">total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Last10Orders)
+                                {
+                                <tr>
+                                    <td><a href="/Order/OrderDetails/@item.Id" style="color:#808080;"> @item.CreateDate.ToShortDateString() </a></td>
+                                    <td> <a href="/Order/OrderDetails/@item.Id" style="color:#808080;"> @item.Id  </a> </td>
+                                    <td> <a href="/Order/OrderDetails/@item.Id" style="color:#808080;">
+                                        @{
+                                            var paid = item.IsPaid;
+                                            if (paid)
+                                            {
+                                                <p> Paid</p>
+                                            }
+                                            else
+                                            {
+                                                <p> UnPaid</p>
+                                            }
+                                        }
+                                    </a> </td>
+                                    <td class="text-right">£@item.TotalAmount </td>
+
+                                </tr>
+
+                                }
+
+                                </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <h2 class="title-1 m-b-25">Vehicles</h2>
+                    <div class="au-card au-card--bg-blue au-card-top-countries m-b-40">
+                        <div class="au-card-inner">
+                            <div class="table-responsive">
+                                <table class="table table-top-countries">
+                                    <tbody>
+                                        @foreach (var item in Model.Top10Vehicles)
+                                        {
+                                            <tr>
+                                                <td><a href="/Vehicle/Details/@item.Id" style="color:white;">@item.Model</a></td>
+                                                <td class="text-right">£ @item.PricePerHour</td>
+                                            </tr>
+
+                                        }
+
+                                        </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+           
+        </div>
+    </div>
+</div>

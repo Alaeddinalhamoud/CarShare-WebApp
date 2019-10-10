@@ -1,0 +1,145 @@
+﻿@model CarShare.Data.VehicleCurrentLocation
+
+@{
+    ViewData["Title"] = "Vehicle Location";
+    Layout = "~/Views/Shared/_CPLayout.cshtml";
+}
+
+<style>
+    #gmap {
+        height: 650px;
+    }
+</style>
+<div class="main-content">
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="overview-wrap">
+                        <h2 class="title-1"> <i class="fas fa-car"></i> Vehicle Current Location</h2>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="col-md-8">
+                @if (!String.IsNullOrEmpty(ViewBag.Msg))
+                {
+                    <div class="alert alert-info alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        @ViewBag.Msg
+                    </div>
+                }
+                <form asp-action="VehicleLocationAddUpdate" asp-controller="Vehicle" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"> </div>
+                    <input asp-for="VehicleId" value="@Model.VehicleId" class="form-control" hidden />
+                    <input asp-for="Id" class="form-control" value="@Model.Id" hidden />
+
+                    <div class="form-group">
+                        <label asp-for="Longitute" class="control-label"></label>
+                        <input asp-for="Longitute" class="form-control" />
+                        <span asp-validation-for="Longitute" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Latitue" class="control-label"></label>
+                        <input asp-for="Latitue" class="form-control" />
+                        <span asp-validation-for="Latitue" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Save" class="au-btn au-btn-icon au-btn--blue" />
+                        <input type="button" onclick="getLocation();" value="Get the Current Location" class="au-btn au-btn-icon au-btn--blue2" />
+                    </div>
+                </form>
+                <br />
+                <div id="gmap">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<script src="~/Style/js/jquery-3.2.1.min.js"></script>
+<script>
+    //Get the Location from Geo HTML nad set it on the text box.
+    var LatitudeInput = document.getElementById("Latitue");
+    var LongitudeInput = document.getElementById("Longitute");
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition, showError);
+            alert('Done.');
+        } else {
+            alert("Geolocation is not supported by this browser.");
+        }
+    }
+
+    function showPosition(position) {
+        LatitudeInput.value = position.coords.latitude;
+        LongitudeInput.value = position.coords.longitude;
+        initMap(LatitudeInput.value, LongitudeInput.value);
+    }
+
+    function showError(error) {
+        switch (error.code) {
+            case error.PERMISSION_DENIED:
+                alert("User denied the request for Geolocation.")
+                break;
+            case error.POSITION_UNAVAILABLE:
+                alert("Location information is unavailable.")
+                break;
+            case error.TIMEOUT:
+                alert("The request to get user location timed out.")
+                break;
+            case error.UNKNOWN_ERROR:
+                alert("An unknown error occurred.")
+                break;
+        }
+    }
+</script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAJu3YwpJf6K5u1EVMtncPm4CD3209OWnw"></script>
+<script>
+
+    $(document).ready(function () {
+        //Get the Location from Geo HTML nad set it on the text box.
+        var Lat = document.getElementById("Latitue").value;
+        var Long = document.getElementById("Longitute").value;
+        initMap(Lat, Long);
+        console.log(Lat);
+       });
+    //Map
+   
+    
+    var map;
+    function initMap(L, T) {
+        console.log(T);
+        var longitute = T;
+        var latitude = L;
+        var myLatlng = new google.maps.LatLng(latitude, longitute);
+        var myOptions = {
+            zoom: 17,
+            center: myLatlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        }
+        var image = {
+            url: '/image/CarShare/Car_Pin.png', // url
+            scaledSize: new google.maps.Size(40, 40), // scaled size
+            origin: new google.maps.Point(0, 0), // origin
+            anchor: new google.maps.Point(0, 20) // anchor
+        };
+
+        map = new google.maps.Map(document.getElementById("gmap"), myOptions);
+        // marker refers to a global variable
+        marker = new google.maps.Marker({
+            position: myLatlng,
+            icon: image,
+            map: map
+        });
+    }
+        //Ends Map
+</script>
+

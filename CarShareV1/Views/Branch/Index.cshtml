@@ -1,0 +1,93 @@
+﻿@model IEnumerable<CarShare.Data.Branch>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_CPLayout.cshtml";
+}
+
+<div class="main-content">
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="overview-wrap">
+                        <h2 class="title-1">Branches</h2>
+                        <!-- Satrtt -->
+                        <a asp-action="Create" class="au-btn au-btn-icon au-btn--blue" align="Right">  <i class="zmdi zmdi-plus"></i>Add Branch</a>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <table class="table table-hover ">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.BranchName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CreateTime)
+                        </th>
+                        <th>Address</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.BranchName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CreateTime)
+                            </td>
+                            <td>
+                                <a asp-action="DetailsByBranchId" asp-controller="BranchAddress" asp-route-id="@item.Id"><i style="color:#4272d7;" class="fas fa-map-signs fa-2x"></i></a>
+                            </td>
+                            
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.Id"><i style="color:#4272d7;" class="fa fa-edit fa-2x"></i></a> |
+                                <a asp-action="Details" asp-route-id="@item.Id"><i style="color:#4272d7;" class="fa fa-info-circle fa-2x"></i></a> |
+                               
+
+                                <a onclick="DeleteBranch(@item.Id)"><i style="color:#4272d7;" class="fa fa-trash fa-2x"></i></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function DeleteBranch(id) {
+        var r = confirm("Are you sure to delete this Vehicle.");
+        if (r) {
+            $.ajax({
+                url: "/Branch/DeleteBranch/" + id,
+                type: "GET",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    console.log(result);
+                    if (result.flag) {
+                        alert(result.msg);
+
+                    } else {
+                        alert('Call support');
+                    }
+
+                },
+                error: function (errormessage) {
+                    alert(errormessage);
+                }
+            });
+        }
+        location.reload();
+    }
+</script>

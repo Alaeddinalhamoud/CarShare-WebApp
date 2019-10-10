@@ -1,0 +1,210 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<CarShare.Data.UserApplication> SignInManager
+@inject UserManager<CarShare.Data.UserApplication> UserManager
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+
+    <title>Car Sharing Software</title>
+
+    <!-- CSS Lib-->
+    <link href="~/Style/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="~/Style/css/plugins/slicknav.min.css" rel="stylesheet">
+
+    <link href="~/Style/css/plugins/magnific-popup.css" rel="stylesheet">
+
+    <link href="~/Style/css/plugins/owl.carousel.min.css" rel="stylesheet">
+
+    <link href="~/Style/css/plugins/gijgo.css" rel="stylesheet">
+
+    <link href="~/Style/css/font-awesome.css" rel="stylesheet">
+
+    <link href="~/Style/css/reset.css" rel="stylesheet">
+
+    <link href="~/Style/style.css" rel="stylesheet">
+
+    <link href="~/Style/css/responsive.css" rel="stylesheet">
+    <!--Main CSS-->
+    <link href="~/css/site.css" rel="stylesheet" />
+</head>
+
+<body class="loader-active">
+
+
+    <div class="preloader">
+        <div class="preloader-spinner">
+            <div class="loader-content">
+                <img src="~/Style/img/preloader.gif" alt="..">
+            </div>
+        </div>
+    </div>
+
+    <header id="header-area" class="fixed-top">
+
+        <div id="header-bottom">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-3">
+                        <a href="/Home/Index" class="logo">
+                            <img src="~/Style/img/logo.png" width="190" height="50" alt="...">
+                        </a>
+                    </div>
+
+                    <div class="col-lg-9 d-none d-xl-block">
+                        <nav class="mainmenu alignright">
+                            <ul>
+                                <li class="active"><a href="/Home/Index">Home</a></li>
+
+
+                                <li>
+                                    <a href="/Vehicle/Vehicles">Cars</a>
+
+                                </li>
+                                @if (SignInManager.IsSignedIn(User))
+                                {
+                                    string currentUserId = UserManager.GetUserId(User);
+                                    var user = await UserManager.FindByIdAsync(currentUserId);
+
+                                    <!--Only Admin Role allows to visit the cp-->
+                                    if (User.IsInRole("Admin"))
+                                    {
+                                        <li><a href="/CP/Index">Admin Panel</a></li>
+                                    }
+
+                                    <li>
+                                        <a href="#">My Reservations</a>
+                                        <ul>
+                                            <li><a href="/Reservation/MyFutureReservations">UPComing Reservation</a></li>
+                                            <li><a href="/Reservation/MyOldReservations">Past Reservation</a></li>
+
+                                        </ul>
+
+                                    </li>
+                                    <li>
+                                        <a href="/Profile/MyProfile">Hi, @user.FirstName</a>
+                                        <ul>
+                                            <li><a href="/Profile/MyProfile">My Profile</a></li>
+                                            <li><a href="/Address/MyAddress">My Address</a></li>
+                                            <li><a href="/DrivingLicence/MyDrivingLicence">My Driving Licence</a></li>
+                                            <li><a href="/Favorite/index">My Favorite</a></li>
+                                            <li><a href="/Order/MyOrderHistory">My Order History</a></li>
+                                            <li><a href="/Order/MyPendingOrders">My Pending Orders</a></li>
+                                        </ul>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                            <button type="submit" class="nav-link btn btn-link text-light">Logout</button>
+                                        </form>
+                                    </li>
+                                }
+                                else
+                                {
+
+                                    <li><a asp-area="Identity" asp-page="/Account/Login">Login</a></li>
+                                    <li><a asp-area="Identity" asp-page="/Account/Register">Register</a></li>
+                                }
+                            </ul>
+                        </nav>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </header>
+
+    @RenderBody()
+
+    <section id="footer-area">
+
+        <div class="footer-widget-area">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-6 col-md-6">
+                        <div class="single-footer-widget">
+                            <h2>Download Our App</h2>
+                            <div class="widget-body">
+                                <div class="mobile-app-content">
+
+                                    <div class="app-btns">
+                                        <a href="#"><i class="fa fa-android"></i> Android Store</a>
+                                        <a href="#"><i class="fa fa-apple"></i> Apple Store</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <div class="single-footer-widget">
+                            <h2>Payment we accpte</h2>
+                            <div class="widget-body">
+                                <div class="mobile-app-content">
+
+                                    <div class="app-btns">
+                                        <div style="color:gold;">
+                                            <ul>
+
+                                                <i class="fa fa-cc-stripe fa-2x"></i>
+                                                <i class="fa fa-cc-visa fa-2x"></i>
+                                                <i class="fa fa-cc-mastercard fa-2x"></i>
+                                                <i class="fa fa-cc-amex fa-2x"></i>
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <div class="scroll-top">
+        <img src="~/Style/img/scroll-top.png" alt="...">
+    </div>
+    <!--Jave Lib-->
+    <script src="~/Style/js/jquery-3.2.1.min.js"></script>
+
+    <script src="~/Style/js/jquery-migrate.min.js"></script>
+
+    <script src="~/Style/js/popper.min.js"></script>
+
+    <script src="~/Style/js/bootstrap.min.js"></script>
+
+    <script src="~/Style/js/plugins/gijgo.js"></script>
+
+    <script src="~/Style/js/plugins/vegas.min.js"></script>
+
+    <script src="~/Style/js/plugins/isotope.min.js"></script>
+
+    <script src="~/Style/js/plugins/owl.carousel.min.js"></script>
+
+    <script src="~/Style/js/plugins/waypoints.min.js"></script>
+
+    <script src="~/Style/js/plugins/counterup.min.js"></script>
+
+    <script src="~/Style/js/plugins/mb.YTPlayer.js"></script>
+
+    <script src="~/Style/js/plugins/magnific-popup.min.js"></script>
+
+    <script src="~/Style/js/plugins/slicknav.min.js"></script>
+
+    <script src="~/Style/js/main.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+
+</html>
+

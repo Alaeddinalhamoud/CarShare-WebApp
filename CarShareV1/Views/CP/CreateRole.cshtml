@@ -1,0 +1,53 @@
+﻿@model Microsoft.AspNetCore.Identity.IdentityRole
+@{
+    ViewData["Title"] = "CreateRole";
+    Layout = "~/Views/Shared/_CPLayout.cshtml";
+}
+
+
+<div class="main-content">
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="overview-wrap">
+                        <h2 class="title-1"> <i class="fas fa-car"></i> Add Role</h2>
+                    </div>
+                </div>
+            </div>
+            <br />
+            
+            <br />
+            <div class="col-md-8">
+
+                @if (!String.IsNullOrEmpty(ViewBag.Msg))
+                {
+                    <div class="alert alert-info alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        @ViewBag.Msg
+                    </div>
+                }
+
+
+                    <form asp-action="CreateRole" asp-controller="CP" method="post">
+                        <input asp-for="Id" value="@Model.Id" class="form-control"hidden />
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="Name" class="control-label"></label>
+                            <input asp-for="Name" class="form-control" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+
+
+
+                        <div class="form-group">
+                            <input type="submit" value="Save" class="au-btn au-btn-icon au-btn--blue" />
+
+                        </div>
+                    </form>
+                <br />
+            </div>
+        </div>
+    </div>
+</div>

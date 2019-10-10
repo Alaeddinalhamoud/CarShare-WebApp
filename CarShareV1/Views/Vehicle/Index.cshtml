@@ -1,0 +1,111 @@
+﻿@model IEnumerable<CarShare.Data.Vehicle>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_CPLayout.cshtml";
+}
+
+<div class="main-content">
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="overview-wrap">
+                        <h2 class="title-1"><i class="fas fa-car fa-2x"></i> Vehicles</h2>
+                        <!-- Satrtt -->
+                        <a asp-action="Create" class="au-btn au-btn-icon au-btn--blue" align="Right">  <i class="zmdi zmdi-plus"></i>Add Vehicle</a>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <table class="table table-hover ">
+                <thead>
+                    <tr>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.Image)
+
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Model)
+                        </th>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.Registration)
+                        </th>
+                        <th>Booking Table</th>
+                        <th>Add Image</th>
+                        <th>Location</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                    <tr>
+                        <td>
+                            <img src="@item.Image" class="img-thumbnail" width="75" height="75" alt=".." />
+
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Model)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Registration)
+
+                        </td>
+                        <td>
+                            <a asp-action="VehicleBookingTime" asp-route-id="@item.Id"><i style="color:#4272d7;" class="far fa-calendar-check-o fa-2x"></i></a>
+                        </td>
+                        <td>
+                            <a asp-action="UploadVehicleImage" asp-route-id="@item.Id"><i style="color:#4272d7;" class="far fa-image fa-2x"></i></a>
+                        </td>
+                        <td>
+                            <a asp-action="VehicleLocation" asp-route-id="@item.Id"><i style="color:#4272d7;" class="fa fa-location-arrow fa-2x"></i></a>
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Id"><i style="color:#4272d7;" class="fa fa-edit fa-2x"></i></a> |
+                            <a asp-action="Details" asp-route-id="@item.Id"><i style="color:#4272d7;" class="fa fa-info-circle fa-2x"></i></a> |
+
+                            <a onclick="DeleteVehicle(@item.Id)"><i style="color:#4272d7;" class="fa fa-trash fa-2x"></i></a>
+
+
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function DeleteVehicle(id) {
+        var r = confirm("Are you sure to delete this Vehicle.");
+        if (r) {
+            $.ajax({
+                url: "/Vehicle/DeleteVehicle/" + id,
+                type: "GET",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    console.log(result);
+                    if (result.flag) {
+                        alert(result.msg);
+                       
+                    } else {
+                        alert('Call support');
+                    }
+                    
+                },
+                error: function (errormessage) {
+                    alert(errormessage);
+                }
+            });
+        }
+        location.reload();
+    }
+</script>

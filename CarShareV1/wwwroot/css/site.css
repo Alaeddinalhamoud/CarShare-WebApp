@@ -1,0 +1,32 @@
+﻿.starrr {
+    display: inline-block;
+}
+
+    .starrr a {
+        font-size: 16px;
+        padding: 0 1px;
+        cursor: pointer;
+        color: #FFD119;
+        text-decoration: none;
+    }
+
+
+
+
+
+
+.Map-a-car {
+    background-color: rgba(255, 255, 255, 0.8);
+    margin-top: 30px;
+    padding: 10px 5px;
+}
+
+    .Map-a-car select.custom-select {
+        background-image: url("../Style/img/caret-cion.png");
+        background-position: right 13px center;
+        background-size: 12px auto;
+    }
+ 
+
+ 
+ 

@@ -1,0 +1,76 @@
+﻿@model IEnumerable<CarShareV1.Models.UserRoleModelView>
+@{
+    ViewData["Title"] = "All USers";
+    Layout = "~/Views/Shared/_CPLayout.cshtml";
+}
+
+<div class="main-content">
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="overview-wrap">
+                        <h2 class="title-1"><i class="fa fa-users fa-2x"></i> Users</h2>
+                    </div>
+                </div>
+            </div>
+
+            <table class="table table-hover ">
+                <thead>
+                    <tr>
+
+                        <th>
+                            Full Name
+                        </th>
+
+                        <th>
+                            Email
+                        </th>
+
+                        <th>
+                            Role
+                        </th>
+                        <th>
+                            Address
+                        </th>
+                        <th>
+                            Driving Lic.
+                        </th>
+                        <th>Edit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                    <tr>
+
+                        <td>
+                            @item.UserName
+                        </td>
+                        <td>
+                            @item.Email
+                        </td>
+                        <td>
+                            @item.RoleName
+
+                        </td>
+                        <td>
+                            <a asp-action="UserAddress" asp-controller="CP" asp-route-id="@item.UserId"><i style="color:#4272d7;" class="fa fa-map fa-2x"></i></a>
+                            <!-- V2   <a onclick="DeleteUser()"><i style="color:#4272d7;" class="fa fa-trash fa-2x"></i></a>-->
+                        </td>
+                        <td>
+                            <a asp-action="UserDrivingLicence" asp-controller="CP" asp-route-id="@item.UserId"><i style="color:#4272d7;" class="fa fa-address-card fa-2x"></i></a>
+                            <!-- V2   <a onclick="DeleteUser()"><i style="color:#4272d7;" class="fa fa-trash fa-2x"></i></a>-->
+                        </td>
+                        <td>
+                            <a asp-action="GetUserRole" asp-controller="CP" asp-route-id="@item.UserId"><i style="color:#4272d7;" class="fa fa-edit fa-2x"></i></a>
+                            <!-- V2   <a onclick="DeleteUser()"><i style="color:#4272d7;" class="fa fa-trash fa-2x"></i></a>-->
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

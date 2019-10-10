@@ -1,0 +1,71 @@
+﻿@model CarShare.Data.DrivingLicence
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_CPLayout.cshtml";
+}
+
+<div class="main-content">
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="overview-wrap">
+                        <h2 class="title-1">Edit</h2>
+                    </div>
+                </div>
+            </div>
+            @if (!String.IsNullOrEmpty(ViewBag.Msg))
+            {
+                <div class="alert alert-info alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    @ViewBag.Msg
+                </div>
+            }
+            <div class="row">
+                <div class="col-md-4">
+                    <form asp-action="ValidateDrivingLicence" asp-controller="DrivingLicence">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="Id" />
+                        <input type="hidden" asp-for="UserId" />
+                        <input type="hidden" asp-for="Image"/>
+                        <input type="hidden" asp-for="CreateTime"/>
+                        <div class="form-group">
+                            <img src="@Model.Image" width="250" />
+                            <span asp-validation-for="Image" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="LicenseNumber" class="control-label"></label>
+                            <input asp-for="LicenseNumber" class="form-control" />
+                            <span asp-validation-for="LicenseNumber" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="IssueDate" class="control-label"></label>
+                            <input asp-for="IssueDate" type="date" class="form-control" />
+                            <span asp-validation-for="IssueDate" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ExpireDate" class="control-label"></label>
+                            <input asp-for="ExpireDate" type="date" class="form-control" />
+                            <span asp-validation-for="ExpireDate" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+
+                            <input asp-for="IsValid" type="checkbox" class="form-control" /> Validate
+                            <span asp-validation-for="IsValid" class="text-danger"></span>
+                        </div>
+
+
+                        <div class="form-group">
+                            <input type="submit" value="Save" class="btn btn-primary" />
+                        </div>
+                    </form>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>

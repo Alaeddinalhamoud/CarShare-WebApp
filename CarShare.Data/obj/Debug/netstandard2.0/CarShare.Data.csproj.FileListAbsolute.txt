@@ -1,0 +1,14 @@
+C:\Users\Alaeddin\Source\Repos\Alaeddinalhamoud\carrent\CarShare.Data\bin\Debug\netstandard2.0\CarShare.Data.deps.json
+C:\Users\Alaeddin\Source\Repos\Alaeddinalhamoud\carrent\CarShare.Data\bin\Debug\netstandard2.0\CarShare.Data.dll
+C:\Users\Alaeddin\Source\Repos\Alaeddinalhamoud\carrent\CarShare.Data\bin\Debug\netstandard2.0\CarShare.Data.pdb
+C:\Users\Alaeddin\Source\Repos\Alaeddinalhamoud\carrent\CarShare.Data\bin\Debug\netstandard2.0\Microsoft.Extensions.Identity.Stores.dll
+C:\Users\Alaeddin\Source\Repos\Alaeddinalhamoud\carrent\CarShare.Data\bin\Debug\netstandard2.0\System.ComponentModel.Annotations.dll
+C:\Users\Alaeddin\Source\Repos\Alaeddinalhamoud\carrent\CarShare.Data\bin\Debug\netstandard2.0\Microsoft.Extensions.Identity.Stores.xml
+C:\Users\Alaeddin\Source\Repos\Alaeddinalhamoud\carrent\CarShare.Data\bin\Debug\netstandard2.0\System.ComponentModel.Annotations.xml
+C:\Users\Alaeddin\Source\Repos\Alaeddinalhamoud\carrent\CarShare.Data\obj\Debug\netstandard2.0\CarShare.Data.csproj.CoreCompileInputs.cache
+C:\Users\Alaeddin\Source\Repos\Alaeddinalhamoud\carrent\CarShare.Data\obj\Debug\netstandard2.0\CarShare.Data.AssemblyInfoInputs.cache
+C:\Users\Alaeddin\Source\Repos\Alaeddinalhamoud\carrent\CarShare.Data\obj\Debug\netstandard2.0\CarShare.Data.AssemblyInfo.cs
+C:\Users\Alaeddin\Source\Repos\Alaeddinalhamoud\carrent\CarShare.Data\obj\Debug\netstandard2.0\CarShare.Data.csproj.CopyComplete
+C:\Users\Alaeddin\Source\Repos\Alaeddinalhamoud\carrent\CarShare.Data\obj\Debug\netstandard2.0\CarShare.Data.dll
+C:\Users\Alaeddin\Source\Repos\Alaeddinalhamoud\carrent\CarShare.Data\obj\Debug\netstandard2.0\CarShare.Data.pdb
+C:\Users\Alaeddin\Source\Repos\Alaeddinalhamoud\carrent\CarShare.Data\obj\Debug\netstandard2.0\CarShare.Data.csprojAssemblyReference.cache

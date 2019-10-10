@@ -1,0 +1,170 @@
+﻿@model CarShare.Data.Vehicle
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_CPLayout.cshtml";
+}
+
+<div class="main-content">
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="overview-wrap">
+                        <h2 class="title-1">Details</h2>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <dl class="row">
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Image)
+                </dt>
+                <dd class="col-sm-8">
+                    <img src="@Model.Image" class="img-thumbnail" width="150" height="150" alt="Alternate Text" />
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.VIN)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.VIN)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Registration)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Registration)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Model)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Model)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.CylinderCapacity)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.CylinderCapacity)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.NumberOfDoors)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.NumberOfDoors)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.SixMonthRate)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.SixMonthRate)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.TwelveMonthRate)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.TwelveMonthRate)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.DateOfFirstRegistration)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.DateOfFirstRegistration)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.YearOfManufacture)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.YearOfManufacture)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Co2Emissions)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Co2Emissions)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.FuelType)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.FuelType)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.TaxStatus)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.TaxStatus)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Transmission)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Transmission)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Colour)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Colour)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.TypeApproval)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.TypeApproval)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.WheelPlan)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.WheelPlan)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.RevenueWeight)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.RevenueWeight)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.TaxDetails)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.TaxDetails)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.MotDetails)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.MotDetails)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Taxed)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Taxed)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Mot)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Mot)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.PricePerHour)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.PricePerHour)
+                </dd>
+
+            </dl>
+        </div>
+        <div>
+
+            <a asp-action="Edit" asp-route-id="@Model.Id"><i style="color:#4272d7;" class="fa fa-edit fa-2x"></i></a>
+            <br/>
+           
+        </div>
+    </div>
+</div>
+         

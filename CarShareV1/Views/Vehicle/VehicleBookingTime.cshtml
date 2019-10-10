@@ -1,0 +1,59 @@
+﻿@model IEnumerable<CarShareV1.Models.BookingTimeModelView>
+    @{
+        ViewData["Title"] = "BookingTime";
+        Layout = "~/Views/Shared/_CPLayout.cshtml";
+    }
+
+    <div class="main-content">
+        <div class="section__content section__content--p30">
+            <div class="container-fluid">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="overview-wrap">
+                            <h2 class="title-1"><i class="fa fa-car fa-2x"></i> Booking Time</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <table class="table table-hover ">
+                    <thead>
+                        <tr>
+
+                            <th>
+                                Date
+                            </th>
+
+                            <th>
+                                Pick Time
+                            </th>
+                            <th>
+                                DropOff Time
+                            </th>
+                             
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+
+                                <td>
+                                    @item.Date.ToShortDateString()
+                                </td>
+                                <td>
+                                    @item.PickUpTime:00 
+                                </td>
+                                <td>
+                                    @item.DropOffTime:00
+
+                                </td>
+
+                                 
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>

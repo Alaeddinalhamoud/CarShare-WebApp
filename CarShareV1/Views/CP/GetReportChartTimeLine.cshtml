@@ -1,0 +1,127 @@
+﻿
+@{
+    ViewData["Title"] = "Report Chart";
+    Layout = "~/Views/Shared/_CPLayout.cshtml";
+}
+
+
+<div class="main-content">
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="overview-wrap">
+                        <h2 class="title-1"><i class="fas fa-chart-area"></i> Report</h2>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <form>
+                        <div class="form-group row">
+                            <label for="inputEmail3" class="col-sm-2 col-form-label">Year</label>
+                            <div class="col-sm-10">
+                                <input id="year" type="date"  class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-sm-10">
+                                <button id="btnGo" type="submit" class="au-btn au-btn-icon au-btn--blue">Go</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <br />
+                    <div id="example5.1" style="height: 300px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/CP/vendor/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+   
+    google.charts.load("current", { packages: ["timeline"] });
+    var dataarray = new Array();
+
+    // Here We will fill chartData
+    $(document).ready(function () {
+        $("#btnGo").on("click", function (e) {
+            e.preventDefault();
+            var year = $('#year').val();
+            var jsonData = JSON.stringify({ Date: year });
+            $.ajax({
+                url: "/CP/GetReportChartTimeLine",
+                data: jsonData,
+                dataType: "json",
+                type: "POST",
+                contentType: "application/json; chartset=utf-8",
+                success: function (result) {
+                    console.log(result);
+                    dataarray = [];
+                    for (i = 0; i < result.length; i++) {
+                        vid = result[i][0];
+                        date = result[i][1];
+                        timeup = result[i][2];
+                        timeoff = result[i][3];
+                        console.log(vid);
+                        console.log(date);
+                        console.log(timeup);
+                        console.log(timeoff);
+                   
+                    pickuptime = new Date(0, 0, 0, timeup, 0, 0);
+                    dropofftime = new Date(0, 0, 0, timeoff, 0, 0);
+                    mydata = [ vid , date , pickuptime, dropofftime  ];
+                    dataarray.push(mydata);
+                }
+                     
+                    
+
+                    chartData = result;
+                    console.log('My data');
+                    console.log(dataarray);                 
+                  
+                },
+                error: function () {
+                    alert("Error loading data! Please try again.");
+                }
+            }).done(function () {
+                // after complete loading data
+               // google.charts.setOnLoadCallback(chartData);
+                google.charts.setOnLoadCallback(dataarray);
+                //  google.setOnLoadCallback(drawChartpie);
+                //  drawChartpie();
+                drawChart();
+            });
+        });
+    });
+
+
+
+    function drawChart() {
+        var container = document.getElementById('example5.1');
+        var chart = new google.visualization.Timeline(container);
+        var dataTable = new google.visualization.DataTable();
+        dataTable.addColumn({ type: 'string', id: 'Vehicle' });
+        dataTable.addColumn({ type: 'string', id: 'Date' });
+        dataTable.addColumn({ type: 'date', id: 'Start' });
+        dataTable.addColumn({ type: 'date', id: 'End' });
+       
+        dataTable.addRows(dataarray);
+
+        var options = {
+            timeline: { colorByRowLabel: true }
+        };
+
+        chart.draw(dataTable, options);
+    }
+</script>

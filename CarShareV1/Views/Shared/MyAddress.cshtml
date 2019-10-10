@@ -1,0 +1,264 @@
+﻿@model CarShare.Data.Address
+
+@{
+    ViewData["Title"] = "MyAddress";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<section id="slider-area">
+    <!--== slide Item One ==-->
+    <div class="single-slide-item overlay">
+        <div class="container">
+
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="book-a-car">
+                        <h5> <i class="fa fa-address-book"></i> My Address</h5>
+                        <hr />
+                        <!-- Why Choose Tab Menu -->
+                        <ul class="nav nav-pills">
+                            <li class="nav-item">
+                                <a class="nav-link " href="/Profile/MyProfile">My Profile</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#">My Address</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/DrivingLicence/MyDrivingLicence">My Driving Licence</a>
+                            </li>
+                        </ul>
+                        <!-- Why Choose Tab Menu -->
+                        <hr />
+
+                        <label>PostCode</label>
+                        <input id="PostCodeData" class="form-control" placeholder="Post Code" type="text" required aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" />
+
+                        <label>HouseNumber</label>
+                        <input id="HouseNumberData" class="form-control" placeholder="House Number" type="text" required aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" />
+                        <br />
+                        <div class="input-submit">
+                            <button onclick="GetAddress()">Get Address</button>
+                        </div>
+                        <br />
+
+                        <!--   <div class="sidenav">
+                <a href="#about">About</a>
+                <a href="#services">Services</a>
+                <a href="#clients">Clients</a>
+                <a href="#contact">Contact</a>
+            </div>
+             -->
+                        @if (!String.IsNullOrEmpty(ViewBag.Msg))
+                        {
+                            <div class="alert alert-info alert-dismissible" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                @ViewBag.Msg
+                            </div>
+                        }
+
+
+                        <form asp-action="UpdateCreate" asp-controller="Address" method="post">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                <label asp-for="PostCode" class="control-label"></label>
+                                <input asp-for="PostCode" class="form-control" />
+                                <span asp-validation-for="PostCode" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="HouseNumber" class="control-label"></label>
+                                <input asp-for="HouseNumber" class="form-control" />
+                                <span asp-validation-for="HouseNumber" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Street" class="control-label"></label>
+                                <input asp-for="Street" class="form-control" />
+                                <span asp-validation-for="Street" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="City" class="control-label"></label>
+                                <input asp-for="City" class="form-control" />
+                                <span asp-validation-for="City" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Country" class="control-label"></label>
+                                <input asp-for="Country" class="form-control" />
+                                <span asp-validation-for="Country" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="County" class="control-label"></label>
+                                <input asp-for="County" class="form-control" />
+                                <span asp-validation-for="County" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Longitute" class="control-label"></label>
+                                <input asp-for="Longitute" class="form-control" />
+                                <span asp-validation-for="Longitute" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Latitue" class="control-label"></label>
+                                <input asp-for="Latitue" class="form-control" />
+                                <span asp-validation-for="Latitue" class="text-danger"></span>
+                            </div>
+
+                            <input asp-for="Id" class="form-control" hidden />
+
+
+                            <div class="input-submit">
+                                <button type="submit">Save</button>
+                            </div>
+
+
+                        </form>
+                        <br />
+
+
+
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="book-a-car">
+                        <!-- Your Map here Start -->
+                        <div class="maparea" id="gmap">
+                        </div>
+                        <!-- Your Map here  End -->
+                        </div>
+                    </div>
+
+                </div>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!--map section-->
+<section id="slider-area">
+
+    <div class="single-slide-item overlay">
+        <div class="container">
+            <div class="row">
+               
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script src="~/js/PostCodeValidation/jspostcode.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAJu3YwpJf6K5u1EVMtncPm4CD3209OWnw&libraries=geometry"></script>
+    <script>
+        //PostCode
+        document.getElementById("PostCode").addEventListener("change", postCodeValidation);
+        function postCodeValidation() {
+            var _PostCode = checkPostCode(document.getElementById('PostCode').value);
+            if (_PostCode) {
+                return true;
+            }
+            else {
+                alert("Invalid Postcode")
+                return false;
+            }
+        }
+        // $(document).ready(function () {
+        //    $("#divresult").hide();
+        //   });
+        function GetAddress() {
+            var res = validate();
+            if (!res) {
+                return false;
+            }
+            var newPostCode = checkPostCode(document.getElementById('PostCodeData').value);
+            if (!newPostCode) {
+                alert("Invalid Postcode")
+                return false;
+            }
+
+            var AddressnObj = {
+                PostCode: $('#PostCodeData').val(),
+                HouseNumber: $('#HouseNumberData').val()
+            };
+            console.log('Submitting form...');
+            console.log(AddressnObj);
+            $.ajax({
+                url: "/Address/GetMyAddressFromAPI",
+                data: JSON.stringify(AddressnObj),
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    console.log(result);
+                    if (result.flag == false) {
+                        alert(result.msg);
+                    } else {
+                        $('#PostCode').val(result.postCode);
+                        $('#HouseNumber').val(result.houseNumber);
+                        $('#Street').val(result.street);
+                        $('#City').val(result.city);
+                        $('#County').val(result.county);
+                        $('#Country').val(result.country);
+                        $('#Longitute').val(result.longitute);
+                        $('#Latitue').val(result.latitue);
+                        initMap(result.latitue, result.longitute);
+
+                    }
+
+                },
+                error: function (errormessage) {
+                    alert(errormessage);
+                }
+            });
+        }
+
+        //Map
+
+        var map;
+        function initMap(L, T) {
+            var longitute = T;
+            var latitude = L;
+            var myLatlng = new google.maps.LatLng(latitude, longitute);
+            var myOptions = {
+                zoom: 17,
+                center: myLatlng,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            }
+            map = new google.maps.Map(document.getElementById("gmap"), myOptions);
+            // marker refers to a global variable
+            marker = new google.maps.Marker({
+                position: myLatlng,
+                map: map
+            });
+        }
+
+
+        //Ends Map
+
+
+
+        function validate() {
+            var isValid = true;
+            if ($('#PostCodeData').val().trim() === "") {
+                $('#PostCodeData').css('border-color', 'Red');
+                isValid = false;
+            }
+            else {
+                $('#PostCodeData').css('border-color', 'lightgrey');
+            }
+            if ($('#HouseNumberData').val().trim() === "") {
+                $('#HouseNumberData').css('border-color', 'Red');
+                isValid = false;
+            }
+            else {
+                $('#HouseNumberData').css('border-color', 'lightgrey');
+            }
+            return isValid;
+        }
+    </script>
+}

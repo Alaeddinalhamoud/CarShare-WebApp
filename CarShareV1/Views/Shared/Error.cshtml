@@ -1,0 +1,41 @@
+﻿@model CarShareV1.Models.ErrorViewModel
+<link href="~/css/ErrorPage/ErrorPage.css" rel="stylesheet" />
+
+<section id="slider-area">
+    <!--== slide Item One ==-->
+    <div class="single-slide-item overlay">
+        <div class="container">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="book-a-car">
+
+
+                        <h3 style="color:#dc3545">
+                            Oooops !
+                        </h3>
+
+                        <img src="~/Image/CarShare/ErrorPage.png" width="400" />
+                        @if (!String.IsNullOrEmpty(Model.ErrorMsg))
+                        {
+
+                            <h3 style="color:#dc3545">
+                                @Model.ErrorMsg
+                            </h3>
+                        }
+                        else
+                        {
+                            <h3 style="color:#dc3545">Please, Call the Tech Team.</h3>
+                        }
+
+
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,65 @@
+﻿@model IEnumerable<Microsoft.AspNetCore.Identity.IdentityRole>
+@{
+    ViewData["Title"] = "AllRoles";
+    Layout = "~/Views/Shared/_CPLayout.cshtml";
+}
+
+<div class="main-content">
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+            @if (!String.IsNullOrEmpty(ViewBag.Msg))
+            {
+                <div class="alert alert-info alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    @ViewBag.Msg
+                </div>
+            }
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="overview-wrap">
+                        <h2 class="title-1"><i class="fa fa-users fa-2x"></i> Roles</h2>
+                        <!--Not important nooneed it -->
+                        @*  <a asp-action="CreateRole" asp-controller="CP" class="au-btn au-btn-icon au-btn--blue" align="Right">  <i class="zmdi zmdi-plus"></i>Add Role</a>*@
+                    </div>
+                </div>
+            </div>
+
+            <table class="table table-hover ">
+                <thead>
+                    <tr>
+
+                        <th>
+                            Id
+                        </th>
+
+                        <th>
+                            Name
+                        </th>
+
+                        <th>Edit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+
+                            <td>
+                                @item.Id
+                            </td>
+                            <td>
+                                @item.Name
+                            </td>
+
+                            
+                            <td>
+                                <a asp-action="EditRole" asp-controller="CP" asp-route-id="@item.Id"><i style="color:#4272d7;" class="fa fa-edit fa-2x"></i></a>
+                                <!-- V2   <a onclick="DeleteUser()"><i style="color:#4272d7;" class="fa fa-trash fa-2x"></i></a>-->
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

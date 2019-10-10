@@ -1,0 +1,174 @@
+﻿@model CarShare.Data.Reservation
+@{
+    ViewData["Title"] = "Drive";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<!--== Page Title Area Start ==-->
+<section id="page-title-area" class="section-padding overlay">
+    <div class="container">
+        <div class="row">
+            <!-- Page Title Start -->
+            <div class="col-lg-12">
+                <div class="section-title  text-center">
+                    <h2>Driving (Simulation)</h2>
+                    <br />
+                    <span class="title-line">
+                        <img src="~/Image/CarShare/DrivingCar2.gif" width="150" />
+                    </span>
+                    <div id="TimeoutDiv" class="card bg-warning text-white" hidden>
+                        <div class="card-body"> <i class="fa fa-exclamation-triangle fa-2x"></i> Dear , your driving time has been finished. <br />Please, Press Arrive to destination<br />Or, we will send you Email to Pay for the Extra hours</div>
+                    </div>
+                    <div>
+                        <h2 id="timer">0:0:0</h2>
+                        <button class="btn btn-warning fa fa-car fa-2x" style="border-radius:20px;" id="start" onclick="start();">  Start Driving</button>
+
+                        <form asp-action="Drive" asp-controller="Profile" method="post" id="DriveForm">
+                            <input asp-for="Id" hidden />
+                            <input asp-for="VehicleId" hidden />
+                            <input asp-for="ReturnLocationLatitue" hidden />
+                            <input asp-for="ReturnLocationLongitute" hidden />
+                            <input asp-for="PickUpDate" hidden />
+                            <input asp-for="PickUpTime" hidden />
+                        </form><button class="btn btn-warning fa fa-car fa-2x" style="border-radius:20px;" id="finish" onclick="stop();"> Arrive at destination </button>
+                        <br />
+                        @{
+                            var time = Convert.ToInt32(Model.DropOffTime) - Convert.ToInt32(Model.PickUpTime);
+
+                            <p>You have booked the Vehicle For @time  Hours.</p>
+                        }
+                    </div>
+                </div>
+            </div>
+            <!-- Page Title End -->
+
+        </div>
+    </div>
+</section>
+
+<script type="text/javascript">
+    document.getElementById("finish").hidden = true;
+    var min = 0;
+    var sec = 0;
+    var miliSec = 0;
+    var timer;
+    function callTimer() {
+        miliSec++;
+        if (miliSec < 100) {
+            if (miliSec === 99) {
+                miliSec = 0;
+                sec++;
+                if (sec === 60) {
+                    sec = 0;
+                    min++;
+                }
+            }
+        }
+        else {
+            miliSec = 0;
+        }
+        document.getElementById("timer").innerHTML = min + ":" + sec;
+    }
+
+    function start() {
+        document.getElementById("start").disabled = true;
+        document.getElementById("start").hidden = true;
+        document.getElementById("finish").hidden = false;
+        timer = setInterval(callTimer, 10);
+    }
+
+    function stop() {
+        document.getElementById("start").disabled = false;
+        clearInterval(timer);
+        getLocation();
+        //To submit after Get the locaion
+        function submitdata() { document.getElementById("DriveForm").submit(); }
+        setTimeout(submitdata, 2000);//2 sec
+
+    }
+
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition, showError);
+        } else {
+            alert("Geolocation is not supported by this browser.");
+        }
+    }
+
+    function showPosition(position) {
+        document.getElementById("ReturnLocationLatitue").value = position.coords.latitude;
+        document.getElementById("ReturnLocationLongitute").value = position.coords.longitude;
+        console.log(position.coords.latitude + " " + position.coords.longitude);
+    }
+
+    function showError(error) {
+        switch (error.code) {
+            case error.PERMISSION_DENIED:
+                alert("User denied the request for Geolocation.")
+                break;
+            case error.POSITION_UNAVAILABLE:
+                alert("Location information is unavailable.")
+                break;
+            case error.TIMEOUT:
+                alert("The request to get user location timed out.")
+                break;
+            case error.UNKNOWN_ERROR:
+                alert("An unknown error occurred.")
+                break;
+        }
+    }
+
+
+</script>
+
+
+@*
+
+    <script type="text/javascript">
+//Futuer Plan to extend the booking....
+
+       // var dateMyDrivingUp = new Date(@Model.PickUpDate.Year.ToString(),@Model.PickUpDate.Month.ToString(),@Model.PickUpDate.Day.ToString(), , 0, 0, 0);
+      // console.log(dateMyDrivingUp);
+
+
+        function CheckTimesUp() {
+            var dateNow = new Date();
+            console.log(dateNow);
+            if (dateNow.getHours() >= @Model.DropOffTime) {
+                //to do
+                var r = confirm("Your Driving time has been finished, if you wish to continue driving, please press OK!");
+                if (r == true) {
+                    //check if someone booked the vehicele ,need to cancel it..
+                    //send email to pay extra hour, refund..
+                    alert('Ok');
+                    document.getElementById("TimeoutDiv").hidden = false;
+                    //Show finishing time and hiden start
+                    document.getElementById("start").hidden = true;
+                    document.getElementById("finish").hidden = false;
+                    clearInterval(mysetInterval);
+                } else {
+                    submitdata(); //Finsih driving by submiting...
+                    //Home page.
+                    clearInterval(mysetInterval);
+                    alert('Submit');
+                    url = "/Home/Index";
+                    $(location).attr("href", url);
+                }
+
+                //todo
+
+
+
+            } else {
+                console.log('CheckingTime');
+            }
+        }
+        //check if the time is finished
+       // setInterval(CheckTimesUp(), 3000);//30000=3 min
+        var mysetInterval =  window.setInterval(function () {
+            /// call your function here
+            CheckTimesUp();
+        }, 3000);
+    </script>
+*@

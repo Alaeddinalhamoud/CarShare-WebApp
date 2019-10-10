@@ -1,0 +1,55 @@
+﻿@model CarShareV1.Models.UserRoleModelView
+@{
+    ViewData["Title"] = "GetUserRole";
+    Layout = "~/Views/Shared/_CPLayout.cshtml";
+}
+
+
+<div class="main-content">
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="overview-wrap">
+                        <h2 class="title-1"> <i class="fas fa-car"></i> Edit User Role</h2>
+                    </div>
+                </div>
+            </div>
+            <br />
+
+            <br />
+            <div class="col-md-8">
+
+                @if (!String.IsNullOrEmpty(ViewBag.Msg))
+                {
+                    <div class="alert alert-info alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        @ViewBag.Msg
+                    </div>
+                }
+
+
+                    <form asp-action="EditUserRole" asp-controller="CP" method="post">
+                        <input asp-for="UserId" value="@Model.UserId" class="form-control" hidden />
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="UserName" class="control-label"></label>
+                            <input asp-for="UserName" class="form-control" />
+                            <span asp-validation-for="UserName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="RoleName" class="control-label"></label>
+                            @Html.DropDownListFor(model => model.RoleId, new SelectList(Model.Roles, "Id", "Name"), new { @style = "width: 100%;" })
+                            <span asp-validation-for="RoleName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Save" class="au-btn au-btn-icon au-btn--blue" />
+
+                        </div>
+                    </form>
+                <br />
+            </div>
+        </div>
+    </div>
+</div>

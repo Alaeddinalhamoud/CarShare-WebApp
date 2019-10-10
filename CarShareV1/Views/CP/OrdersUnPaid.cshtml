@@ -1,0 +1,62 @@
+﻿@model IEnumerable<CarShare.Data.Order>
+    @{
+        ViewData["Title"] = "OrdersUnPaid";
+        Layout = "~/Views/Shared/_CPLayout.cshtml";
+    }
+
+    <div class="main-content">
+        <div class="section__content section__content--p30">
+            <div class="container-fluid">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="overview-wrap">
+                            <h2 class="title-1"><i class="fa fa-address-card fa-2x"></i> Orders (UnPaid)</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <table class="table table-hover ">
+                    <thead>
+                        <tr>
+
+                            <th>
+                                Id
+                            </th>
+
+                            <th>
+                                Date
+                            </th>
+                            <th>
+                                Total
+                            </th>
+                            <th>Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+
+                                <td>
+                                    @item.Id
+                                </td>
+                                <td>
+                                    @item.CreateDate.ToShortDateString()
+                                </td>
+                                <td>
+                                   £ @item.TotalAmount
+
+                                </td>
+
+                                <td>
+                                    <a asp-action="OrderDetails" asp-controller="Order" asp-route-id="@item.Id"><i style="color:#4272d7;" class="fa fa-info-circle fa-2x"></i></a>
+                                    <!-- V2   <a onclick="DeleteUser()"><i style="color:#4272d7;" class="fa fa-trash fa-2x"></i></a>-->
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>

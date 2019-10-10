@@ -1,0 +1,74 @@
+﻿@model IEnumerable<CarShare.Data.Vehicle>
+
+@{
+    ViewData["Title"] = "Vehicles";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!--== Car List Area Start ==-->
+<section id="car-list-area" class="section-padding">
+    <div class="container">
+        <div class="row">
+            <!-- Car List Content Start -->
+            <div class="col-lg-12">
+                <div class="car-list-content">
+                    <br/>
+                    <div class="row">
+                        @foreach (var item in Model)
+                        {
+                            <!-- Single Car Start -->
+                            <div class="col-lg-6 col-md-6">
+                                <div class="single-car-wrap">
+                                    <div class="car-list-thumb car-thumb-1">
+                                        <img src="@item.Image" alt="..." />
+                                    </div>
+                                    <div class="car-list-info without-bar">
+                                        <h2><a href="/Vehicle/VehicleDetails/@item.Id">@item.Model</a></h2>
+                                        <h5>£ @item.PricePerHour Rent /per a day</h5>
+                                        <ul class="car-info-list">
+                                            <li>AC</li>
+                                            <li>@item.FuelType</li>
+                                            <li>@item.Transmission</li>
+                                        </ul>
+                                        <p class="rating">
+                                            @{
+                                                var num = item.Rating;
+                                                if (num == 0)
+                                                {
+                                                    <i class="fa fa-star unmark" aria-hidden="true"></i>
+                                                    <i class="fa fa-star unmark" aria-hidden="true"></i>
+                                                    <i class="fa fa-star unmark" aria-hidden="true"></i>
+                                                    <i class="fa fa-star unmark" aria-hidden="true"></i>
+                                                    <i class="fa fa-star unmark" aria-hidden="true"></i>
+                                                }
+                                                var res = num - Math.Truncate(num);
+                                                var inum = Math.Truncate(num);
+                                                for (var i = 0; i < inum; i++)
+                                                {
+                                                    <i class="fa fa-star" style="color:gold;" aria-hidden="true"></i>
+                                                }
+                                                if (res != 0)
+                                                {
+                                                    <i class="fa fa-star-half" style="color:gold;" aria-hidden="true"></i>
+                                                }
+                                            }
+                                        </p>
+                                        <!--Futuer Plan-->
+                                        <!--   <a href="#" class="rent-btn">Book It</a>-->
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Single Car End -->
+                        }
+
+
+                    </div>
+                </div>
+
+            
+               
+            </div>
+            <!-- Car List Content End -->
+        </div>
+    </div>
+</section>
+<!--== Car List Area End ==-->

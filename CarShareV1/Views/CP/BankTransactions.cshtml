@@ -1,0 +1,63 @@
+﻿@model IEnumerable<CarShare.Data.BankTransaction>
+
+@{
+    ViewData["Title"] = "BankTransaction";
+    Layout = "~/Views/Shared/_CPLayout.cshtml";
+}
+
+<div class="main-content">
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="overview-wrap">
+                        <h2 class="title-1"><i class="fas fa-university"></i> Bank Transactions</h2>
+
+                       
+                    </div>
+                </div>
+            </div>
+
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>TransactionId</th>
+                        <th>Customer</th>
+                        <th>OrderId</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <a href="/Order/OrderDetails/@item.OrderId">   @item.TransactionId</a>
+                            </td>
+                            <td>
+                                @item.FullName
+                            </td>
+                            <td>
+                                <a href="/Order/OrderDetails/@item.OrderId">  @item.OrderId</a>
+                            </td>
+                            <td>
+                               £ @item.Amount
+                            </td>
+                            <td>
+                                @item.Status
+                            </td>
+                            <td>
+                                @item.Date
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

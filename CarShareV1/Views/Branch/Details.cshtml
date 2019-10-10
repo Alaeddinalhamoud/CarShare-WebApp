@@ -1,0 +1,48 @@
+﻿@model CarShare.Data.Branch
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_CPLayout.cshtml";
+}
+
+<div class="main-content">
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="overview-wrap">
+                        <h2 class="title-1">Details</h2>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <dl class="row">
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.BranchName)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.BranchName)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.CreateTime)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.CreateTime)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.UpdateTime)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.UpdateTime)
+                </dd>
+              
+            </dl>
+        </div>
+        <div>
+             <a asp-action="Edit" asp-route-id="@Model.Id"><i style="color:#4272d7;" class="fa fa-edit fa-2x"></i></a>
+            <br />
+
+        </div>
+    </div>
+</div>

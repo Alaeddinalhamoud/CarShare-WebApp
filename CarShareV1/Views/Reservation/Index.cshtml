@@ -1,0 +1,79 @@
+﻿@model IEnumerable<CarShare.Data.Reservation>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_CPLayout.cshtml";
+}
+
+
+<div class="main-content">
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+
+          
+            <br />
+            <table class="table table-hover ">
+                <thead>
+                    <tr>
+                         
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.PickUpDate)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.PickUpTime)
+                        </th>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.DropOffTime)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Amount)
+                        </th>
+                        <th>Confirmed</th>
+
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                                                    
+                            <td>
+                                @item.PickUpDate.ToShortDateString()
+                            </td>
+                            <td>
+                                @item.PickUpTime:00
+                            </td>                             
+                            <td>
+                                @item.DropOffTime:00
+                            </td>
+                            <td>
+                              £ @item.Amount
+                            </td>  
+                            <td>
+                                @{
+                                    var value = item.IsConfirmed;
+                                    if (value)
+                                    {
+                                        <i class="fa fa-check-circle fa-2x" style="color:#4272d7"></i>
+                                    }
+                                    else
+                                    {
+                                        <i class="fa fa-times-circle fa-2x" style="color:#4272d7"></i>
+                                    }
+                                }
+                            </td>
+                              <td>
+
+                                <a asp-action="Delete" asp-route-id="@item.Id"><i style="color:#4272d7;" class="fa fa-trash fa-2x"></i></a> |
+                                <a asp-action="ReservationDetails" asp-controller="Reservation" asp-route-id="@item.Id"><i style="color:#4272d7;" class="fa fa-info-circle fa-2x"></i></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            </div>
+</div>
+</div>

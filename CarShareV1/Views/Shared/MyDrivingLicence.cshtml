@@ -1,0 +1,103 @@
+﻿@model CarShare.Data.DrivingLicence
+
+@{
+    ViewData["Title"] = "MyDrivingLicence";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+<section id="slider-area">
+    <!--== slide Item One ==-->
+    <div class="single-slide-item overlay">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="book-a-car">
+
+                        <!--   <div class="sidenav">
+                <a href="#about">About</a>
+                <a href="#services">Services</a>
+                <a href="#clients">Clients</a>
+                <a href="#contact">Contact</a>
+            </div>
+             -->
+                        @if (!String.IsNullOrEmpty(ViewBag.Msg))
+                        {
+                            <div class="alert alert-info alert-dismissible" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                @ViewBag.Msg
+                            </div>
+                        }
+                        <h5> <i class="fa fa-id-card"></i> Driving Licence</h5>
+                        <hr />
+                        <!-- Why Choose Tab Menu -->
+                        <ul class="nav nav-pills">
+                            <li class="nav-item">
+                                <a class="nav-link " href="/Profile/MyProfile">My Profile</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Address/MyAddress">My Address</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#">My Driving Licence</a>
+                            </li>
+                        </ul>
+                        <!-- Why Choose Tab Menu -->
+                        <hr />
+
+
+                        <form asp-action="UpdateCreate" asp-controller="DrivingLicence" method="post">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input asp-for="Id" class="form-control" hidden />
+                            <div class="form-group">
+                                <label asp-for="LicenseNumber" class="control-label"></label>
+                                <input asp-for="LicenseNumber" class="form-control" />
+                                <span asp-validation-for="LicenseNumber" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="IssueDate" class="control-label"></label>
+                                <input asp-for="IssueDate" type="date" class="form-control" />
+                                <span asp-validation-for="IssueDate" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="ExpireDate" class="control-label"></label>
+                                <input asp-for="ExpireDate" type="date" class="form-control" />
+                                <span asp-validation-for="ExpireDate" class="text-danger"></span>
+                            </div>
+
+                            <div class="input-submit">
+                                <button type="submit">Next</button>
+                            </div>
+
+
+                        </form>
+                        <br />
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="book-a-car">
+                        <!-- Your Map here Start -->
+                        @{
+                            var image = Model.Image;
+
+                            @if (image !="0")
+                            {
+                                <img src="@Model.Image" alt=".." class="img-fluid img-thumbnail" />
+                                <!-- Your Map here  End -->
+                            }
+                            else
+                            {
+                                <img src="~/Image/CarShare/DL.png" alt=".." class="img-fluid img-thumbnail" />
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+

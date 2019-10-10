@@ -1,0 +1,108 @@
+﻿
+
+@page
+@model LoginModel
+@using Microsoft.Extensions.Options
+@inject IOptions<CarShareV1.Data.ReCAPTCHASettings> GooglereCAPTCHA
+@{
+    ViewData["Title"] = "Log in";
+
+}
+
+<!--== Login Page Content Start ==-->
+<section id="lgoin-page-wrap" class="section-padding">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-lg-4 col-md-8 m-auto">
+                <div class="login-page-content">
+                    <div class="login-form">
+                        <h3>Welcome Back!</h3>
+                        <form id="account" method="post">
+                            <div asp-validation-summary="All" class="text-danger"></div>
+                            <div class="username">
+                                <input asp-for="Input.Email" type="email" placeholder="Email" required>
+                                <span asp-validation-for="Input.Email" class="text-danger"></span>
+                            </div>
+                            <div class="password">
+                                <input type="password" asp-for="Input.Password" placeholder="Password" required>
+                                <span asp-validation-for="Input.Password" class="text-danger"></span>
+                            </div>
+                            <div>
+                                <div class="form-group">
+                                    <div class="checkbox">
+                                        <label asp-for="Input.RememberMe">
+                                            <input asp-for="Input.RememberMe" />
+                                            @Html.DisplayNameFor(m => m.Input.RememberMe)
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <input asp-for="Input.Token" hidden/>
+                            <div class="log-btn">
+                                <button type="submit"><i class="fa fa-sign-in"></i> Log In</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="login-other">
+                        <span class="or">or</span>
+
+                        @{
+                            if ((Model.ExternalLogins?.Count ?? 0) == 0)
+                            {
+                                <div>
+
+                                </div>
+                            }
+                            else
+                            {
+                                <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                                    <div>
+                                      
+                                            @foreach (var provider in Model.ExternalLogins)
+                                            {
+                                                if (provider.DisplayName == "Facebook")
+                                                {
+                                                    <button type="submit" class="book-now-btn"   name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account"> <i class="fa fa-facebook fa-2x"></i>acebook</button>
+
+                                                }
+                                                if (provider.DisplayName == "Google")
+                                                {
+                                                    <button type="submit" class="book-now-btn" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">  <i class="fa fa-google fa-2x"></i>oogle</button>
+                                                }
+                                            }
+                                        
+                                    </div>
+                                </form>
+                            }
+                        }
+
+
+
+                    </div>
+                    <div class="create-ac">
+                        <p>Don't have an account? <a asp-area="Identity" asp-page="/Account/Register">Sign Up</a></p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--== Login Page Content End ==-->
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script src="https://www.google.com/recaptcha/api.js?render=@GooglereCAPTCHA.Value.ReCAPTCHA_Site_Key"></script>
+    <script>
+        grecaptcha.ready(function () {
+            grecaptcha.execute('@GooglereCAPTCHA.Value.ReCAPTCHA_Site_Key', { action: 'login' }).then(function (token) {
+                console.log(token);
+                $('#Input_Token').val(token);
+          });
+      });
+    </script>
+
+}

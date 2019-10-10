@@ -1,0 +1,76 @@
+﻿@model CarShare.Data.BranchAddress
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_CPLayout.cshtml";
+}
+
+
+<div class="main-content">
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="overview-wrap">
+                        <h2 class="title-1">Edit</h2>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="col-md-12">
+
+                <form asp-action="Edit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Id" />
+                     
+                    <div class="form-group">
+                        <label asp-for="PostCode" class="control-label"></label>
+                        <input asp-for="PostCode" class="form-control" />
+                        <span asp-validation-for="PostCode" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="HouseNumber" class="control-label"></label>
+                        <input asp-for="HouseNumber" class="form-control" />
+                        <span asp-validation-for="HouseNumber" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Street" class="control-label"></label>
+                        <input asp-for="Street" class="form-control" />
+                        <span asp-validation-for="Street" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="City" class="control-label"></label>
+                        <input asp-for="City" class="form-control" />
+                        <span asp-validation-for="City" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Country" class="control-label"></label>
+                        <input asp-for="Country" class="form-control" />
+                        <span asp-validation-for="Country" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="County" class="control-label"></label>
+                        <input asp-for="County" class="form-control" />
+                        <span asp-validation-for="County" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Longitute" class="control-label"></label>
+                        <input asp-for="Longitute" class="form-control" />
+                        <span asp-validation-for="Longitute" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Latitue" class="control-label"></label>
+                        <input asp-for="Latitue" class="form-control" />
+                        <span asp-validation-for="Latitue" class="text-danger"></span>
+                    </div>
+                     
+                    <div class="form-group">
+                        <input type="submit" value="Save" class="au-btn au-btn-icon au-btn--blue" />
+                    </div>
+                </form>
+                <br />
+            </div>
+        </div>
+    </div>
+</div>

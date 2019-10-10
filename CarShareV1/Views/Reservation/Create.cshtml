@@ -1,0 +1,86 @@
+﻿@model CarShare.Data.Reservation
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section id="slider-area">
+    <!--== slide Item One ==-->
+    <div class="single-slide-item overlay">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5">
+                    <div class="book-a-car">
+
+                        <form asp-action="Create">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                <label asp-for="VehicleId" class="control-label"></label>
+                                <input asp-for="VehicleId" class="form-control" />
+                                <span asp-validation-for="VehicleId" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="PickUpLocationLongitute" class="control-label"></label>
+                                <input asp-for="PickUpLocationLongitute" class="form-control" />
+                                <span asp-validation-for="PickUpLocationLongitute" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="PickUpLocationLatitue" class="control-label"></label>
+                                <input asp-for="PickUpLocationLatitue" class="form-control" />
+                                <span asp-validation-for="PickUpLocationLatitue" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="ReturnLocationLongitute" class="control-label"></label>
+                                <input asp-for="ReturnLocationLongitute" class="form-control" />
+                                <span asp-validation-for="ReturnLocationLongitute" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="ReturnLocationLatitue" class="control-label"></label>
+                                <input asp-for="ReturnLocationLatitue" class="form-control" />
+                                <span asp-validation-for="ReturnLocationLatitue" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="PickUpDate" class="control-label"></label>
+                                <input asp-for="PickUpDate" type="date" class="form-control" />
+                                <span asp-validation-for="PickUpDate" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="PickUpTime" class="control-label"></label>
+                                <input asp-for="PickUpTime" type="time" class="form-control" />
+                                <span asp-validation-for="PickUpTime" class="text-danger"></span>
+                            </div>
+                            @*    <div class="form-group">
+            <label asp-for="DropOffDate" class="control-label"></label>
+            <input asp-for="DropOffDate" type="date" class="form-control" />
+            <span asp-validation-for="DropOffDate" class="text-danger"></span>
+        </div>
+                            *@
+                            <div class="form-group">
+                                <label asp-for="DropOffTime" class="control-label"></label>
+                                <input asp-for="DropOffTime" type="time" class="form-control" />
+                                <span asp-validation-for="DropOffTime" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Amount" class="control-label"></label>
+                                <input asp-for="Amount" class="form-control" />
+                                <span asp-validation-for="Amount" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="submit" value="Create" class="btn btn-primary" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div>
+                    <a asp-action="Index">Back to List</a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>

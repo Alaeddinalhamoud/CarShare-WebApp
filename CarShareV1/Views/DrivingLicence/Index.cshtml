@@ -1,0 +1,92 @@
+﻿@model IEnumerable<CarShare.Data.DrivingLicence>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_CPLayout.cshtml";
+}
+
+
+<div class="main-content">
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="overview-wrap">
+                        <h2 class="title-1">Driving Licence</h2>
+                    </div>
+                </div>
+            </div>
+            @if (!String.IsNullOrEmpty(ViewBag.Mssg))
+            {
+                <div class="alert alert-info alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    @ViewBag.Mssg
+                </div>
+            }
+            <br />
+            <table class="table table-hover ">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Image)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.IssueDate)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ExpireDate)
+                        </th>
+                        <th>
+                            IsValid
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+
+                                <img src="@item.Image" class="img-thumbnail" width="75" height="75" alt=".." />
+                            </td>
+                            <td>
+                                @item.IssueDate.ToShortDateString()
+                            </td>
+                            <td>
+                                @item.ExpireDate.ToShortDateString()
+                            </td>
+                            <td>
+                                @{
+                                    var value = item.IsValid;
+                                    if (value)
+                                    {
+                                        <i class="fa fa-check-circle fa-2x" style="color:#4272d7"></i>
+                                    }
+                                    else
+                                    {
+                                        <i class="fa fa-times-circle fa-2x" style="color:#4272d7"></i>
+                                    }
+                                }
+                            </td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.Id">Validate</a> |
+                                <a asp-action="Delete" asp-route-id="@item.Id"><i style="color:#4272d7;" class="fa fa-trash fa-2x"></i></a>
+
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+ 
+
+
+
+ 
+
+

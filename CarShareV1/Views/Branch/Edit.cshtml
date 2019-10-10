@@ -1,0 +1,39 @@
+﻿@model CarShare.Data.Branch
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_CPLayout.cshtml";
+}
+
+
+<div class="main-content">
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="overview-wrap">
+                        <h2 class="title-1">Edit</h2>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="col-md-12">
+                <form asp-action="Edit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Id" />
+                    <div class="form-group">
+                        <label asp-for="BranchName" class="control-label"></label>
+                        <input asp-for="BranchName" class="form-control" />
+                        <span asp-validation-for="BranchName" class="text-danger"></span>
+                    </div>
+                
+                    <div class="form-group">
+                        <input type="submit" value="Save" class="au-btn au-btn-icon au-btn--blue" />
+                    </div>
+                </form>
+                <br />
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <UserSecretsId>aspnet-CarShareV1-7955F132-0A85-46E5-A9BF-A85C7DFDB442</UserSecretsId>
+    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="Flurl.Http" Version="2.4.1" />
+    <PackageReference Include="getAddress.Sdk" Version="1.5.5" />
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
+    <PackageReference Include="Nexmo.Csharp.Client" Version="3.2.4" />
+    <PackageReference Include="Quartz" Version="3.0.7" />
+    <PackageReference Include="SendGrid" Version="9.11.0" />
+    <PackageReference Include="Stripe.net" Version="25.10.0" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\CarShare.Data\CarShare.Data.csproj" />
+  </ItemGroup>
+
+</Project>

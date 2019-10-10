@@ -1,0 +1,224 @@
+﻿@model CarShare.Data.BranchAddress
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_CPLayout.cshtml";
+}
+
+ 
+
+<div class="main-content">
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="overview-wrap">
+                        <h2 class="title-1"> <i class="fas fa-car"></i> Add Branch Address</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <!--Get Address API-->
+                <div class="col-md-6" id="divdata">
+                    <div class="form-group">
+                        <div class="input-group input-group-sm mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroup-sizing-sm">Post Code</span>
+                            </div>
+                            <input id="PostCodeData" class="form-control" placeholder="Post Code" type="text" required aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group input-group-sm mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroup-sizing-sm">House Number</span>
+                            </div>
+                            <input id="HouseNumberData" class="form-control" placeholder="House Number" type="text" required aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="button" value="Get Address" onclick="GetAddress()" class="au-btn au-btn-icon au-btn--blue" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <form asp-action="Create" asp-controller="BranchAddress" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <input asp-for="BranchId" value="@Model.BranchId" hidden class="form-control" />
+
+                        <div class="form-group">
+                            <label asp-for="PostCode" class="control-label"></label>
+                            <input asp-for="PostCode" class="form-control" />
+                            <span asp-validation-for="PostCode" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="HouseNumber" class="control-label"></label>
+                            <input asp-for="HouseNumber" class="form-control" />
+                            <span asp-validation-for="HouseNumber" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Street" class="control-label"></label>
+                            <input asp-for="Street" class="form-control" />
+                            <span asp-validation-for="Street" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="City" class="control-label"></label>
+                            <input asp-for="City" class="form-control" />
+                            <span asp-validation-for="City" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Country" class="control-label"></label>
+                            <input asp-for="Country" class="form-control" />
+                            <span asp-validation-for="Country" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="County" class="control-label"></label>
+                            <input asp-for="County" class="form-control" />
+                            <span asp-validation-for="County" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Longitute" class="control-label"></label>
+                            <input asp-for="Longitute" class="form-control" />
+                            <span asp-validation-for="Longitute" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Latitue" class="control-label"></label>
+                            <input asp-for="Latitue" class="form-control" />
+                            <span asp-validation-for="Latitue" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="submit" value="Done" class="au-btn au-btn-icon au-btn--blue" />
+                        </div>
+                    </form>
+                    <br />
+                </div>
+                <!--Map-->
+                <div class="col-md-6">
+                    <div id="gmap"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    
+    <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?key=AIzaSyCrsVewcqnsKdGm5F9I852GlqGWgVF29aY"></script>
+    <script>
+        //PostCode
+        document.getElementById("PostCode").addEventListener("change", postCodeValidation);
+        function postCodeValidation() {
+            var _PostCode = checkPostCode(document.getElementById('PostCode').value);
+            if (_PostCode) {
+                return true;
+            }
+            else {
+                alert("Invalid Postcode")
+                return false;
+            }
+        }
+        // $(document).ready(function () {
+        //    $("#divresult").hide();
+        //   });
+        function GetAddress() {
+            var res = validate();
+            if (!res) {
+                return false;
+            }
+            var newPostCode = checkPostCode(document.getElementById('PostCodeData').value);
+            if (!newPostCode) {
+                alert("Invalid Postcode")
+                return false;
+            }
+
+            var AddressnObj = {
+                PostCode: $('#PostCodeData').val(),
+                HouseNumber: $('#HouseNumberData').val()
+            };
+            console.log('Submitting form...');
+            console.log(AddressnObj);
+            $.ajax({
+                url: "/BranchAddress/GetAddressFromAPI",
+                data: JSON.stringify(AddressnObj),
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    console.log(result);
+                    if (result.flag==false) {
+                        alert(result.msg);
+                    } else {
+                        $('#PostCode').val(result.postCode);
+                        $('#HouseNumber').val(result.houseNumber);
+                        $('#Street').val(result.street);
+                        $('#City').val(result.city);
+                        $('#County').val(result.country);
+                        $('#Country').val(result.county);
+                        $('#Longitute').val(result.longitute);
+                        $('#Latitue').val(result.latitue);
+                        initMap(result.latitue, result.longitute);
+                      
+                    }
+
+                },
+                error: function (errormessage) {
+                    alert(errormessage);
+                }
+            });
+        }
+
+        //Map
+
+        var map;
+        function initMap(L, T) {
+            var longitute = T;
+            var latitude = L;
+            var myLatlng = new google.maps.LatLng(latitude, longitute);
+            var myOptions = {
+                zoom: 17,
+                center: myLatlng,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            }
+            map = new google.maps.Map(document.getElementById("gmap"), myOptions);
+            // marker refers to a global variable
+            marker = new google.maps.Marker({
+                position: myLatlng,
+                map: map
+            });
+        }
+
+
+        //Ends Map
+
+
+
+        function validate() {
+            var isValid = true;
+            if ($('#PostCodeData').val().trim() === "") {
+                $('#PostCodeData').css('border-color', 'Red');
+                isValid = false;
+            }
+            else {
+                $('#PostCodeData').css('border-color', 'lightgrey');
+            }
+            if ($('#HouseNumberData').val().trim() === "") {
+                $('#HouseNumberData').css('border-color', 'Red');
+                isValid = false;
+            }
+            else {
+                $('#HouseNumberData').css('border-color', 'lightgrey');
+            }
+            return isValid;
+        }
+    </script>
+}

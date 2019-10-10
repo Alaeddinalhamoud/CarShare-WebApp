@@ -1,0 +1,69 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<!--== Login Page Content Start ==-->
+<section id="lgoin-page-wrap" class="section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-5 col-md-8 m-auto">
+                <div class="login-page-content">
+                    <div class="login-form">
+                        <h3>Sign Up</h3>
+                        <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                            <div class="name">
+                                <div class="row">
+                                    <div asp-validation-summary="All" class="text-danger"></div>
+                                    <div class="col-md-6">
+                                        <input asp-for="Input.FirstName" type="text" placeholder="First Name" required>
+                                        <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input asp-for="Input.LastName" type="text" placeholder="Last Name" required>
+                                        <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="username">
+                                <input asp-for="Input.Email" type="email" placeholder="Email" required>
+                                <span asp-validation-for="Input.Email" class="text-danger"></span>
+                            </div>
+                            
+                               <div class="username">
+                                    <input  asp-for="Input.DOB"  type="date" required>
+                                    <span asp-validation-for="Input.DOB"  class="text-danger"></span>
+                                </div>
+
+                                <div class="password">
+                                    <input asp-for="Input.Password" type="password" placeholder="Password" required>
+                                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                                </div>
+                                <div class="password">
+                                    <input asp-for="Input.ConfirmPassword" type="password" placeholder="Confirm Password" required>
+                                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                                </div>
+                                <div class="log-btn">
+                                    <button type="submit"><i class="fa fa-check-square"></i> Sign Up</button>
+                                </div>
+</form>
+                    </div>
+
+                    
+                    <div class="create-ac">
+                        <p>Have an account? <a asp-area="Identity" asp-page="/Account/Login">Sign In</a></p>
+                    </div>
+                     
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--== Login Page Content End ==-->
+
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

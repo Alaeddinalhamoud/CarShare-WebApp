@@ -1,0 +1,53 @@
+@model IEnumerable<CarShare.Data.Review>
+
+
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<CarShare.Data.UserApplication> SignInManager
+@inject UserManager<CarShare.Data.UserApplication> UserManager
+
+
+<!--Shoud check user sing-->
+@foreach (var item in Model)
+{
+    var user = await UserManager.FindByIdAsync(item.UserId);
+    var fullname = user.FirstName + " " + user.LastName;
+
+    <div class="review-area" id="CustomerWritingReviewBox">
+        <i>@fullname</i>
+
+        <div>
+            <span>
+                Rating:
+                @{
+                    var num = Convert.ToDouble(item.Rating);
+                    if (num == 0)
+                    {
+                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                    }
+                    var res = num - Math.Truncate(num);
+                    var inum = Math.Truncate(num);
+                    for (var i = 0; i < inum; i++)
+                    {
+                        <i class="fa fa-star" style="color:gold;" aria-hidden="true"></i>
+                    }
+                    if (res != 0)
+                    {
+                        <i class="fa fa-star-half" style="color:gold;" aria-hidden="true"></i>
+                    }
+                }
+            </span>
+            <span style="float:right;"><i class="fa fa-calendar"></i> @item.CreateTime.ToShortDateString()</span>
+        </div>
+        <div class="review-form">
+            <div class="message-input">
+                <textarea id="Description" name="review" cols="30" readonly>@item.Description</textarea>
+            </div>
+
+        </div>
+    </div>
+
+}

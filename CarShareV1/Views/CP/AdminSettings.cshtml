@@ -1,0 +1,72 @@
+﻿@model CarShare.Data.WebSiteSetting
+
+@{
+    ViewData["Title"] = "AdminSettings";
+    Layout = "~/Views/Shared/_CPLayout.cshtml";
+}
+
+<div class="main-content">
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="overview-wrap">
+                        <h2 class="title-1"> <i class="fas fa-cogs"></i> Settings</h2>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="col-md-4">
+                <form asp-action="AdminSettings" method="post" asp-controller="CP">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="AddressAPI" class="control-label"></label>
+                        <input asp-for="AddressAPI" class="form-control" />
+                        <span asp-validation-for="AddressAPI" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="DVLAAPI" class="control-label"></label>
+                        <input asp-for="DVLAAPI" class="form-control" />
+                        <span asp-validation-for="DVLAAPI" class="text-danger"></span>
+                    </div>
+                    @*
+        <div class="form-group">
+            <label asp-for="PaymentAPI" class="control-label"></label>
+            <input asp-for="PaymentAPI" class="form-control" />
+            <span asp-validation-for="PaymentAPI" class="text-danger"></span>
+        </div>
+                    *@
+                    <div class="form-group">
+                        <label asp-for="MobileApiKey" class="control-label"></label>
+                        <input asp-for="MobileApiKey" class="form-control" />
+                        <span asp-validation-for="MobileApiKey" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="MobileApiSecret" class="control-label"></label>
+                        <input asp-for="MobileApiSecret" class="form-control" />
+                        <span asp-validation-for="MobileApiSecret" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="MobileWebsiteName" class="control-label"></label>
+                        <input asp-for="MobileWebsiteName" class="form-control" />
+                        <span asp-validation-for="MobileWebsiteName" class="text-danger"></span>
+                    </div>
+
+
+
+                    <input asp-for="Id" class="form-control" hidden />
+
+
+                    <div class="form-group">
+                        <input type="submit" value="Update" class="au-btn au-btn-icon au-btn--blue" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,65 @@
+﻿@model CarShare.Data.EmailSetting
+
+@{
+    ViewData["Title"] = "WebsiteEmailSetting";
+    Layout = "~/Views/Shared/_CPLayout.cshtml";
+}
+
+<div class="main-content">
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="overview-wrap">
+                        <h2 class="title-1">Email Settings</h2>
+                    </div>
+                </div>
+            </div>
+            <br />
+
+            <div class="col-md-4">
+                <form asp-action="WebsiteEmailSettings" method="post" asp-controller="CP">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="FromEmail" class="control-label"></label>
+                        <input asp-for="FromEmail" type="email" class="form-control" />
+                        <span asp-validation-for="FromEmail" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="UserName" class="control-label"></label>
+                        <input asp-for="UserName" class="form-control" />
+                        <span asp-validation-for="UserName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Password" class="control-label"></label>
+                        <input asp-for="Password" class="form-control" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Smtp" class="control-label"></label>
+                        <input asp-for="Smtp" class="form-control" />
+                        <span asp-validation-for="Smtp" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Port" class="control-label"></label>
+                        <input asp-for="Port" class="form-control" />
+                        <span asp-validation-for="Port" class="text-danger"></span>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="SSL" /> @Html.DisplayNameFor(model => model.SSL)
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Update" class="au-btn au-btn-icon au-btn--blue" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
